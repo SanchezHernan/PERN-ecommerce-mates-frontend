@@ -1,0 +1,17 @@
+.navegbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.imglad {
+    padding-right: 5px;
+}
+
+.nombre {
+    color: black;
+}
+
+.carrito{
+    margin-bottom: 1px;
+}
