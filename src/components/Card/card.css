@@ -1,0 +1,10 @@
+.dim {
+    display: flex;
+    width: 250px;
+}
+
+
+
+.card-text {
+    color: black;
+}

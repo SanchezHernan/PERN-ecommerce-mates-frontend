@@ -7,7 +7,7 @@ import './navbar.css'
 function NavBar() {
     return (
         
-            <nav className="navbar">
+            <nav className="navbar navbar-dark bg-dark">
                 <a className="navbar-brand nombre" href="#">
                     <img src={mate1} class="d-inline-block align-top imglad" width="32" height="32" alt="" loading="lazy"/>
                     Remate Amargo

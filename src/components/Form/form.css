@@ -5,3 +5,15 @@
 .cForm {
     width: 60%;
 }
+
+@media (max-width: 800px) {
+    .cForm{
+        width: 50%;
+    }
+}
+
+@media (max-width: 600px) {
+    .cForm{
+        width: 40%;
+    }
+}
