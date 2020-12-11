@@ -27,11 +27,11 @@
   background-color: #282c34;
   min-height: 100vh;
   flex-direction: column;
-  flex: 80%;  
+  flex: 75%;  
 }
 
 .side{
-  flex: 20%;
+  flex: 25%;
   background-color: darkslategrey;
   color: white;
 }

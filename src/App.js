@@ -4,7 +4,7 @@ import Menu from './components/NavBar/menu'
 import Card from './components/Card/card'
 import mate from './images/mate1.png'
 import lupa from './images/navIconSearch.png'
-
+import Side from './components/Side/side'
 
 
 function App() {
@@ -16,13 +16,7 @@ function App() {
       
       <div className="row">
         <div className="side">
-          <h3>Articulos</h3>
-          <h5>Filtros</h5>
-          <p>Some text</p>
-          <p>Some text</p>
-          <p>Some text</p>
-          <h3>More Text</h3>
-          <p>Lorem ipsum dolor sit ame.</p>
+          <Side/>
         </div>
         
         <div className="main">
