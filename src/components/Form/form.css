@@ -2,18 +2,15 @@
     width: 200px;
 }
 
-.cForm {
-    width: 60%;
+.form-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
 }
 
-@media (max-width: 800px) {
-    .cForm{
-        width: 50%;
-    }
+.input-group{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
-@media (max-width: 600px) {
-    .cForm{
-        width: 40%;
-    }
-}

@@ -1,0 +1,45 @@
+.login-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: cadetblue;
+}
+
+
+.login-content{
+    width: 85%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    position: absolute;
+}
+
+.submit-button-container {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.submit-button {
+    width: 40%;
+    height: 40px;
+    border-radius: 25px;
+    background: rgb(7, 69, 71);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.small-content{
+    color: rgb(184, 41, 41);
+}
+
+.label-alert{
+    font-size: 14px;
+    color: red;
+    background: lightblue;
+}

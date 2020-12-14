@@ -1,0 +1,16 @@
+.input-container{
+    width: 80%;
+}
+
+
+@media (max-width: 625px) {
+    .input-container{
+        width: 75%;
+    }
+}
+
+@media (max-width: 510px) {
+    .input-container{
+        width: 70%;
+    }
+}
