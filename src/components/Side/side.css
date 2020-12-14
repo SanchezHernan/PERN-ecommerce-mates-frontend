@@ -3,7 +3,6 @@
 }
 
 .container{
-    margin-left: 8px;
     display: flex;
     flex-direction: column;
     text-align: start;
@@ -14,7 +13,15 @@
 }
     
 .bottom{
-    display: flex;
-    align-items: flex-end;
+    position: absolute;
+    left: 0;
+    bottom: 0;
     padding-left: 15px;
+    text-align: start;
+}
+
+.big{
+    margin-left: 8px;
+    min-height: 97%;
+    position: relative;
 }

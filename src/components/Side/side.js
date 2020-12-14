@@ -3,7 +3,7 @@ import './side.css'
 
 let Side = () => {
     return (
-        <div>
+        <div className="big">
             <div className="container">
                 <h3 className="art">Artículos</h3>
                 <div class="marle input-group">
@@ -45,7 +45,14 @@ let Side = () => {
                 </form>
             </div>
             <div className="bottom">
-                holis
+                <hr/>
+                <div className="contacto">
+                    <a href="#">Contacto</a>
+                </div>
+                <hr/>
+                <div className="ayuda">
+                    <a href="#">Ayuda</a>
+                </div>
             </div>
 
 
