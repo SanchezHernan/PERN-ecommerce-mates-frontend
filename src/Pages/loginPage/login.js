@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Label from '../../components/Label/label';
 import LoginInput from '../../components/Input/loginInput';
+import { Redirect, useHistory } from 'react-router-dom';
+import useUser from '../../hook/useUser'
 import './login.css'
+
 
 const LoginButton = () => {
 
@@ -9,8 +12,15 @@ const LoginButton = () => {
   const [ password, setPassword ] = useState('');
   const [ passwordError, setPasswordError ] = useState(false);
   const [ isLogin, setIsLogin ] = useState(false);
-  const [ hasError, setHasError ] = useState(false);
+  const [ wrongPassword, setWrongPassword ] = useState(false);
+  const [ wrongEmail, setWrongEmail ] = useState(false);
+  const history = useHistory();
 
+  useEffect(() => {
+    if (isLogged) history.push('/secret');
+  }, [isLogged, history])
+
+  const {login, isLogged} = useUser();
 
   function handleChange(id, value) {
     if(id === 'email') {
@@ -25,27 +35,43 @@ const LoginButton = () => {
     }
   };
 
-  function ifMatch(param) {
+
+  const getUsuarios = async (param) => {
+    let jsonData;
     if(param.email.length > 0 && param.password.length > 0) {
-        if(param.email === 'Hernan' && param.password === '123456') {
-          const { email, password } = param;
-          let ac = { email, password };
-          let account = JSON.stringify(ac);
-          localStorage.setItem('accont', account);
-          setIsLogin(true);
-        } else {
-          setIsLogin(false);
-          setHasError(true);
+      try {
+        const response = await fetch(`http://localhost:5000/usuarios/${param.email}`)
+        jsonData = await response.json();
+        if(jsonData.email.length > 0){
+          console.log(jsonData.email)
+          setWrongEmail(false);
+          if(jsonData.contrasenia === param.password){
+            setWrongPassword(false);
+            setIsLogin(true);
+            login();
+          } else {
+            setWrongPassword(true);
+            setIsLogin(false);
+          }
         }
+      } catch (err) {
+        setWrongEmail(true);
+        setWrongPassword(false);
+        setIsLogin(false);
+        console.error(err.message);
+      }
     } else {
       setIsLogin(false);
+      setWrongPassword(false);
     }
   }
+  
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     let account = { email, password }
     if(account) {
-      ifMatch(account);
+      getUsuarios(account);
     }
   }
 
@@ -53,10 +79,17 @@ const LoginButton = () => {
     
     <div className='login-container'>
       <div className='login-content'>
-        <h1>Bienvenido</h1>
-        { hasError &&
+        { isLogged &&
+          <Redirect to="/secret"/>    
+        }
+        { wrongEmail &&
           <label className='label-alert'>
-            Se han introducidos datos erroneos
+            Email incorrecto
+          </label>
+        }
+        { wrongPassword &&
+          <label className='label-alert'>
+            Contraseña incorrecta
           </label>
         }
         <Label htmlFor='email' text="email"/>
@@ -80,7 +113,6 @@ const LoginButton = () => {
           param={ passwordError }
         />
 
-
         { passwordError &&
           <small className='small-content'>Contraseña demasiado corta</small>
         }
@@ -92,7 +124,7 @@ const LoginButton = () => {
       </div>
     </div>  
   );
-  
 };
+
 
 export default LoginButton;
