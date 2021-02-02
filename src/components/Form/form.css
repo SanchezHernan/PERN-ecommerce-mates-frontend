@@ -3,6 +3,18 @@
 }
 
 .form-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.input-group{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
     width: 65%;
 }
 
@@ -27,3 +39,4 @@
         font-size: medium;
     }
 }
+

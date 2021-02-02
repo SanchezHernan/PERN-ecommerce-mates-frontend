@@ -25,11 +25,17 @@ const MyForm = () => {
           }}
           handleChange={ handleChange }
         />
+
+        <button type='submit' className='btn btn-outline-primary' value='Submit'>
+            Buscar
+        </button>
+
         <div>
           <button type='submit' className='btn btn-outline-primary' value='Submit'>
             Buscar
           </button>
         </div>
+
       </div>
     </form>
   )

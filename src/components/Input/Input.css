@@ -1,45 +1,9 @@
 .input-container{
-    width: 90%;
+
+    width: 80%;
 }
 
-@media (max-width: 1200px) {
-    .input-container{
-        width: 87%;
-    }
-}
 
-@media (max-width: 950px) {
-    .input-container{
-        width: 85%;
-    }
-}
 
-@media (max-width: 870px) {
-    .input-container{
-        width: 82%;
-    }
-}
 
-@media (max-width: 750px) {
-    .input-container{
-        width: 80%;
-    }
-}
 
-@media (max-width: 710px) {
-    .input-container{
-        width: 75%;
-    }
-}
-
-@media (max-width: 630px) {
-    .input-container{
-        width: 70%;
-    }
-}
-
-@media (max-width: 600px) {
-    .input-container{
-        width: 50%;
-    }
-}

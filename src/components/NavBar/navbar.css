@@ -1,7 +1,7 @@
 .navegbar{
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: row;
+    padding: 5px;
 }
 
 .imglad {
@@ -9,9 +9,91 @@
 }
 
 .nombre {
-    color: black;
+    color: aliceblue;
+
 }
 
 .carrito{
     margin-bottom: 1px;
+}
+
+.navbar-content-1{
+    flex: 14%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: larger;
+}
+
+.navbar-content-2{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    flex: 60%;
+}
+
+.navbar-content-3{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+}
+
+.carrito-user{
+    display: flex;
+    align-items: center;
+}
+
+.mate{
+    width: 32px;
+    height: 32px;
+}
+
+.user{
+    width: 32px;
+    height: 32px;
+}
+
+.carrito{
+    width: 39px;
+    height: 36px;
+}
+
+
+@media (max-width: 900px) {
+    .navbar-content-1{
+        font-size: large;
+    }
+}
+
+@media (max-width: 800px) {
+    .navbar-content-1{
+        font-size: medium;
+    }
+}
+
+
+@media (max-width: 750px) {
+    .navbar-content-1{
+        flex: 20%;
+    }
+    .navbar-content-2{
+        flex: 55%;
+    }
+}
+
+@media (max-width: 600px) {
+    .mate{
+        width: 28px;
+        height: 28px;
+    }
+
+    .carrito{
+        width: 32px;
+        height: 30px;
+    }
+
+    .user{
+        width: 28px;
+        height: 28px;
+    }
 }
