@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Label from '../../components/Label/label';
 import LoginInput from '../../components/Input/loginInput';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import useUser from '../../hook/useUser'
 import './login.css'
 
@@ -11,16 +11,16 @@ const LoginButton = () => {
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ passwordError, setPasswordError ] = useState(false);
-  const [ isLogin, setIsLogin ] = useState(false);
   const [ wrongPassword, setWrongPassword ] = useState(false);
   const [ wrongEmail, setWrongEmail ] = useState(false);
   const history = useHistory();
+  const {login, isLogged} = useUser();
 
   useEffect(() => {
-    if (isLogged) history.push('/secret');
+    if (isLogged) {
+      history.push('/home');
+    }
   }, [isLogged, history])
-
-  const {login, isLogged} = useUser();
 
   function handleChange(id, value) {
     if(id === 'email') {
@@ -43,25 +43,21 @@ const LoginButton = () => {
         const response = await fetch(`http://localhost:5000/usuarios/${param.email}`)
         jsonData = await response.json();
         if(jsonData.email.length > 0){
-          console.log(jsonData.email)
           setWrongEmail(false);
           if(jsonData.contrasenia === param.password){
             setWrongPassword(false);
-            setIsLogin(true);
+            console.log('llego')
             login();
           } else {
             setWrongPassword(true);
-            setIsLogin(false);
           }
         }
       } catch (err) {
         setWrongEmail(true);
         setWrongPassword(false);
-        setIsLogin(false);
         console.error(err.message);
       }
     } else {
-      setIsLogin(false);
       setWrongPassword(false);
     }
   }
@@ -79,9 +75,6 @@ const LoginButton = () => {
     
     <div className='login-container'>
       <div className='login-content'>
-        { isLogged &&
-          <Redirect to="/secret"/>    
-        }
         { wrongEmail &&
           <label className='label-alert'>
             Email incorrecto

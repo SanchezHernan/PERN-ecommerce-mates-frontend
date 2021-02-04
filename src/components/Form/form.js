@@ -16,25 +16,25 @@ const MyForm = () => {
   return(
     <form className='form-container'>
       <div className='input-group'>
-        <Input 
-          atribute={{
-            id: 'buscar',
-            type: 'text',
-            className: 'form-control',
-            placeholder: 'buscar producto',
-          }}
-          handleChange={ handleChange }
-        />
-
+        <div className='input-group-content-1'>
+          <Input 
+            atribute={{
+              id: 'buscar',
+              type: 'text',
+              className: 'form-control',
+              placeholder: 'buscar producto',
+            }}
+            handleChange={ handleChange }
+          />
+        </div>
         <button type='submit' className='btn btn-outline-primary' value='Submit'>
             Buscar
         </button>
 
-        <div>
-          <button type='submit' className='btn btn-outline-primary' value='Submit'>
-            Buscar
-          </button>
-        </div>
+        <button type='submit' className='btn btn-outline-primary' value='Submit'>
+          Buscar
+        </button>
+        
 
       </div>
     </form>

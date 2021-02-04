@@ -8,40 +8,36 @@
     padding-right: 5px;
 }
 
-.nombre {
-    color: aliceblue;
-
-}
-
 .carrito{
     margin-bottom: 1px;
+    width: "40";
+    height: "37";
 }
 
 .navbar-content-1{
-    flex: 14%;
+    flex: 3;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     font-size: larger;
+    color: aliceblue;
 }
 
 .navbar-content-2{
     display: flex;
     flex-direction: row;
     align-content: center;
-    flex: 60%;
+    flex: 14;
 }
 
 .navbar-content-3{
+    flex: 2;
     display: flex;
     flex-direction: row;
-    align-content: center;
+    align-items: center;
+    justify-content: flex-end;
 }
 
-.carrito-user{
-    display: flex;
-    align-items: center;
-}
 
 .mate{
     width: 32px;
@@ -73,15 +69,12 @@
 
 
 @media (max-width: 750px) {
-    .navbar-content-1{
-        flex: 20%;
-    }
     .navbar-content-2{
-        flex: 55%;
+        flex: 13;
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 603px) {
     .mate{
         width: 28px;
         height: 28px;
@@ -95,5 +88,12 @@
     .user{
         width: 28px;
         height: 28px;
+    }
+
+    .imglad{
+        padding-right: 3px;
+    }
+    .navbar-content-2{
+        flex: 12;
     }
 }

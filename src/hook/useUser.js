@@ -2,19 +2,22 @@ import {useCallback, useContext} from 'react';
 import Context from '../context/userContext';
 
 
-export default function userUser () {
-    const {jwt, setJWT} = useContext(Context)
+export default function useUser () {
+    const {isLogged, setIsLogged} = useContext(Context)
 
     const login = useCallback(() => {
-        setJWT('test')
-    }, [setJWT])
+        window.sessionStorage.setItem('isLogged', true)
+        setIsLogged(true)
+    }, [setIsLogged])
 
     const logout = useCallback(() => {
-        setJWT(null)
-    }, [setJWT])
+        window.sessionStorage.removeItem('isLogged')
+        setIsLogged(false)
+    }, [setIsLogged])
 
     return {
-        isLogged: Boolean(jwt),
-        login
+        isLogged,
+        login,
+        logout
     }
 }

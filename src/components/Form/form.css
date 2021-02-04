@@ -14,29 +14,15 @@
     justify-content: center;
 }
 
-
-    width: 65%;
+.input-group-content-1{
+    flex: 10%;
 }
+
 
 
 @media (max-width: 850px) {
     .form-container{
-        width: 60%;
-    }
-}
-
-@media (max-width: 750px) {
-    .form-container{
-        width: 55%;
-    }
-}
-
-@media (max-width: 670px) {
-    .form-container{
-        width: 50%;
-    }
-    .nombre{
-        font-size: medium;
+        width: 95%;
     }
 }
 

@@ -2,16 +2,14 @@ import './App.css';
 import HomeCliente from './Pages/homePage/homeCliente'
 import Login from './Pages/loginPage/login'
 
-import React, { useState } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect,
-  Link,
 } from "react-router-dom";
 
-import {userContextProvider} from './context/userContext';
+import {UserContextProvider} from './context/userContext';
 import ProtectedRoute from "./components/ProtectedRoutes/protectedRoute";
 import Secret from "./Pages/secret/secret";
 
@@ -19,25 +17,13 @@ import Secret from "./Pages/secret/secret";
 
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  const login = () => {
-    setIsAuthenticated(true);
-  };
-
-  const logout = () => {
-    setIsAuthenticated(false);
-  };
 
   return (
-    <userContextProvider>
+    <UserContextProvider>
       <div className="App">
         <Router>
           <Switch>
             <Route path="/" exact component={Login}>
-              {isAuthenticated && 
-                <Redirect to="/secret" />
-              }
             </Route>
             <ProtectedRoute
               exact
@@ -51,7 +37,7 @@ function App() {
           </Switch>
         </Router>
       </div>
-    </userContextProvider>
+    </UserContextProvider>
     
   );
 }
