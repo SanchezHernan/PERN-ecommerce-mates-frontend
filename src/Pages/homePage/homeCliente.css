@@ -1,0 +1,8 @@
+.ofertas{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;  
+    align-items: initial;
+    justify-content: space-around;
+}
+

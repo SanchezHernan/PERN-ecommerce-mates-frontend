@@ -11,8 +11,6 @@ const MyForm = () => {
     }
   };
 
-  console.log('buscado: ', buscado);
-
   return(
     <form className='form-container'>
       <div className='input-group'>

@@ -1,21 +1,37 @@
-.dim {
-    display: flex;
-    width: 250px;
+.card{
+    margin: 10px;
 }
 
+.img-dim{
+    width: 80%;
+    height: 80%;
+}
 
 .card-text {
     color: black;
 }
 
-@media (max-width: 700px) {
+
+@media (max-width: 1600px) {
     .dim{
-        width: 200px;
+        min-width: 200px;
+        width: 30%;
+        height: 300px;
     }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 1100px) {
     .dim{
-        width: 170px;
+        min-width: 200px;
+        width: 40%;
+        height: 250px;
+    }
+}
+
+@media (max-width: 550px) {
+    .dim{
+        min-width: 200px;
+        width: 80%;
+        height: 250px;
     }
 }

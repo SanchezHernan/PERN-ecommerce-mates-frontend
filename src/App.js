@@ -10,8 +10,8 @@ import {
 } from "react-router-dom";
 
 import {UserContextProvider} from './context/userContext';
-import ProtectedRoute from "./components/ProtectedRoutes/protectedRoute";
-import Secret from "./Pages/secret/secret";
+import {OptionContextProvider} from './context/optionContext'
+
 
 
 
@@ -20,16 +20,12 @@ function App() {
 
   return (
     <UserContextProvider>
+      <OptionContextProvider>
       <div className="App">
         <Router>
           <Switch>
             <Route path="/" exact component={Login}>
             </Route>
-            <ProtectedRoute
-              exact
-              path="/secret"
-              component={Secret}
-            />
             <Route exact path='/home' component={ HomeCliente } />
             <Route path="*">
               <div>404 Not found </div>
@@ -37,6 +33,7 @@ function App() {
           </Switch>
         </Router>
       </div>
+      </OptionContextProvider>
     </UserContextProvider>
     
   );
