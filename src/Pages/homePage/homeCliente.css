@@ -1,3 +1,21 @@
+.home{
+    display: flex;
+}
+
+.fila{
+    display: flex;
+    flex-direction: row;
+}
+
+.side{
+    flex: 1;
+    min-width: 175px;
+}
+
+.main{
+    flex: 4;
+}
+
 .ofertas{
     display: flex;
     flex-direction: row;

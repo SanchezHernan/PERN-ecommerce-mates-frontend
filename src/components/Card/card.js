@@ -1,14 +1,28 @@
-
+import { useCallback, useEffect, useState } from 'react';
 import './card.css'
 
-function Card(props) {
+function Card({ img, nombre, precio, descuento}) {
+
     return (
-        <div className="card dim">
-            <img src={props.img} className="card-img-top img-dim" alt="..."/>
+        <a className="card dim" href="*">
+            <img src={img} className="card-img-top img-dim" alt="..."/>
             <div className="card-body">
-                <p className="card-text">$$ PRECIO $$</p>
+                <h6 className="card-title">{nombre}</h6>
+                { descuento === 0 ? 
+                    <p className="card-text">${precio}</p>
+                :
+                    <div className="style-1">
+                        <del>
+                            <span className="amount">{precio}</span>
+                        </del>
+                        <ins>
+                            <span className="amount">{descuento}</span>
+                        </ins>
+                    </div>
+                }
+                
             </div>
-        </div>
+        </a>
     );
 }
   

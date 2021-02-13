@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import NavBar from '../../components/NavBar/navbar'
 import Menu from '../../components/NavBar/menu';
 import Card from '../../components/Card/card'
@@ -12,27 +12,48 @@ import './homeCliente.css'
 
 
 const HomeCliente = () => {
-
   
   const history = useHistory();
   const {isLogged} = useUser();
   const {option} = useOptions();
   const [cardImg, setCardImg] = useState([]);
 
-  const getProductos = async () => {
+
+  const calcularDescuento = (p) => {
+    const prod = p;
+    if (p.porcdescuento !== 0){
+      prod.porcdescuento = (p.precio - (p.precio * p.porcdescuento / 100));
+    }
+    return prod;
+  }
+
+
+  const getProductos = useCallback(async () => {
     const response = await fetch(`http://localhost:5000/productos/${option}`)
+    const jsonData = await response.json();
+    return jsonData;
+  }, [option])
+
+  const getOfertas = async () => {
+    const response = await fetch(`http://localhost:5000/ofertas`)
     const jsonData = await response.json();
     return jsonData;
   }
 
   useEffect(() => {
     const fetchData = async () => {
-      const request = await getProductos();
-      const imgs = request.map((reqImg) => reqImg.imagen);
-      setCardImg(imgs);
+      if (option !== '0') {
+        const request = await getProductos();
+        const info = request.map((producto) => calcularDescuento(producto));
+        setCardImg(info)
+      } else {
+        const request = await getOfertas();
+        const info = request.map((producto) => calcularDescuento(producto));
+        setCardImg(info);
+      }
     }
     fetchData()
-  }, [option]);
+  }, [option, getProductos]);
 
   useEffect(() => {
     if (!isLogged) {
@@ -45,7 +66,7 @@ const HomeCliente = () => {
   return(
       <div className="Home">
         <NavBar/>        
-        <div className="row">
+        <div className="fila">
           <div className="side">
             <Side/>
           </div>
@@ -64,10 +85,13 @@ const HomeCliente = () => {
               </div>
               :
               <div className='ofertas'>
-                {cardImg.map((imagen, i) => 
+                {cardImg.map((elemento, i) => 
                   <Card className='oferta'
                     key={i}
-                    img={imagen}
+                    img={elemento.imagen}
+                    nombre={elemento.nombre}
+                    precio={elemento.precio}
+                    descuento={elemento.porcdescuento}
                   />
                 )}
               </div>

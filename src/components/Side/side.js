@@ -15,7 +15,7 @@ const Side = () => {
         <div className="big">
             <div className="container">
                 <h3 className="art">Artículos</h3>
-                <div className="marle input-group">
+                <div className="input-group">
                     <select className="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon" onChange={handleChange}>
                         <option defaultValue>Filtrar por...</option>
                         <option value="1">Mates</option>
@@ -23,15 +23,11 @@ const Side = () => {
                         <option value="3">Bombillas</option>
                         <option value="4">Bolsos</option>
                         <option value="5">Yerbas</option>
+                        <option value="6">Otros</option>
                     </select>
                     {/* <Select className='custom-select' option={options}/>*/}
-                    <div className="input-group-append">
-                        <button className="btn btn-dark" type="button">Buscar</button>
-                    </div>
                 </div>
-            </div>
-            <hr/>
-            <div className="container">
+                <hr/>
                 <h3>Ordenar Por</h3>
                 <form className="radio-buttons">
                     <div className="form-check">

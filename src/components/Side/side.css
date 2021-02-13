@@ -1,15 +1,8 @@
-.marle{
-    padding-left: 5px;
-}
 
 .container{
     display: flex;
     flex-direction: column;
     text-align: start;
-}
-
-.art{
-    padding-left: 5px;
 }
     
 .bottom{

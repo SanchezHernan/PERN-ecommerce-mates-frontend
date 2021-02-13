@@ -7,6 +7,7 @@ export default function useOptions () {
 
     const marcar = (value) => {
         setOption(value);
+        console.log('2');
     }
 
     return {
