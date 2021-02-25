@@ -1,14 +1,16 @@
 import React from 'react';
+import RadioButton from '../RadioButton/radioButton'
 import useOptions from '../../hook/useOptions'
 import './side.css'
 
 const Side = () => {
    
-    const{marcar} = useOptions();
+    const{ marcar } = useOptions()
     
     const handleChange = (event) => {
-        marcar(event.target.value);
+        marcar(event.target.value)
     }
+
 
 
     return (
@@ -24,31 +26,11 @@ const Side = () => {
                         <option value="4">Bolsos</option>
                         <option value="5">Yerbas</option>
                         <option value="6">Otros</option>
-                    </select>
-                    {/* <Select className='custom-select' option={options}/>*/}
+                    </select>            
                 </div>
-                <hr/>
-                <h3>Ordenar Por</h3>
-                <form className="radio-buttons">
-                    <div className="form-check">
-                        <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="1" />
-                        <label className="form-check-label" htmlFor="exampleRadios1">
-                            Precio
-                        </label>
-                    </div>
-                    <div className="form-check">
-                        <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="2" />
-                        <label className="form-check-label" htmlFor="exampleRadios2">
-                            Calificacion
-                        </label>
-                    </div>
-                    <div className="form-check">
-                        <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="3" /> 
-                        <label className="form-check-label" htmlFor="exampleRadios3">
-                            Descuentos
-                        </label>
-                    </div>
-                </form>
+                <hr/><hr/>
+                <h4>Ordenar Por</h4>
+                <RadioButton />
             </div>
             <div className="bottom">
                 <hr/>
@@ -60,9 +42,6 @@ const Side = () => {
                     <a href="#">Ayuda</a>
                 </div>
             </div>
-
-
-
         </div>
     );
 }

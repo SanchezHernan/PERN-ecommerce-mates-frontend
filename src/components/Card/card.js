@@ -1,26 +1,28 @@
-import { useCallback, useEffect, useState } from 'react';
 import './card.css'
+import Price from '../Price/price'
+import useOptions from '../../hook/useOptions'
+import { useHistory } from 'react-router-dom';
 
-function Card({ img, nombre, precio, descuento}) {
+function Card({ cardClass = 'card dim', imgClass = 'card-img-top img-dim', img, nombre, precio, descuento, codigo }) {
+
+    const {changeProdId} = useOptions();
+    const history = useHistory();
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        changeProdId(codigo);
+        history.push('/product')
+    }
 
     return (
-        <a className="card dim" href="*">
-            <img src={img} className="card-img-top img-dim" alt="..."/>
+        <a className={cardClass} onClick={handleClick} href="http://localhost:3000/product">
+            <img src={img} className={imgClass} alt="..."/>
             <div className="card-body">
                 <h6 className="card-title">{nombre}</h6>
-                { descuento === 0 ? 
-                    <p className="card-text">${precio}</p>
-                :
-                    <div className="style-1">
-                        <del>
-                            <span className="amount">{precio}</span>
-                        </del>
-                        <ins>
-                            <span className="amount">{descuento}</span>
-                        </ins>
-                    </div>
-                }
-                
+                <Price
+                    precio={precio}
+                    descuento={descuento}
+                />    
             </div>
         </a>
     );

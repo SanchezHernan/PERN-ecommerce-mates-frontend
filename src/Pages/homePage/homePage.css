@@ -2,6 +2,10 @@
     display: flex;
 }
 
+h1{
+    color: red;
+}
+
 .fila{
     display: flex;
     flex-direction: row;

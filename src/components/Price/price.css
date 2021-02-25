@@ -1,0 +1,29 @@
+del {
+    color: red;
+    text-decoration: none;
+    position: relative;
+}
+
+del::before {
+    content: "";
+    display: block;
+    width: 100%;
+    border-top: 2px solid red;
+    height: 12px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: rotate(-7deg);
+}
+
+ins{
+    color: green;
+    font-size: 24px;
+    text-decoration: none;
+    padding: 1em 1em 1em .5em;
+}
+
+.price{
+    color: green;
+    font-size: 20px;
+}

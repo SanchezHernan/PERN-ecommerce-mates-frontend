@@ -1,0 +1,37 @@
+.cartContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.cartContent1{
+    flex: auto;
+}
+
+.cartContent2{
+    flex: auto;
+}
+
+.listContent{
+    justify-content: space-around;
+}
+
+.icon{
+    width: 20px;
+}
+
+.listContent{
+    display: flex;
+    flex-direction: row;
+    text-align: start;
+}
+
+.buttonsContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.button{
+    margin: 5px;
+}

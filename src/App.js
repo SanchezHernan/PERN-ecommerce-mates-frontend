@@ -1,6 +1,11 @@
 import './App.css';
-import HomeCliente from './Pages/homePage/homeCliente'
+
+//Pages
+import HomePage from './Pages/homePage/homePage'
 import Login from './Pages/loginPage/login'
+import UserPage from './Pages/userPage/userPage'
+import ProductPage from './Pages/productPage/productPage'
+import CartPage from './Pages/cartPage/cartPage'
 
 import React from "react";
 import {
@@ -13,9 +18,6 @@ import {UserContextProvider} from './context/userContext';
 import {OptionContextProvider} from './context/optionContext'
 
 
-
-
-
 function App() {
 
   return (
@@ -24,12 +26,12 @@ function App() {
       <div className="App">
         <Router>
           <Switch>
-            <Route path="/" exact component={Login}>
-            </Route>
-            <Route exact path='/home' component={ HomeCliente } />
-            <Route path="*">
-              <div>404 Not found </div>
-            </Route>
+            <Route exact path='/' component={Login} />
+            <Route exact path='/home' component={HomePage} />
+            <Route exact path='/user' component={UserPage}/>
+            <Route exact path='/product' component={ProductPage}/>
+            <Route exact path='/cart' component={CartPage}/>
+            <Route path="*"><div>404 Not found </div></Route>
           </Switch>
         </Router>
       </div>

@@ -1,0 +1,143 @@
+.userPage{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.userPageContent{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: start;
+    margin-left: 20px;
+    flex: 3;
+}
+
+.userPageContent2{
+    width: 100%;
+}
+
+
+.userInfo{
+    display: flex;
+    flex-direction: row;
+    text-align: start;
+}
+
+.userInfoContent1{
+    margin-top: 10px;
+}
+
+.userInfoContent2{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.userInfoContent3{
+    margin-left: 10px;
+    width: 90%;
+}
+
+.editInput{
+    margin-top: 10px;
+    min-width: 150px;
+    width: 80%;
+}
+
+
+.linkEdit{
+    margin-left: 5px;
+    padding-bottom: 8px;
+}
+
+.buttons{
+    display: flex;
+    margin-top: 5px;
+    flex-direction: row;
+}
+
+.button{
+    margin: 5px;
+}
+
+@media (max-width: 550px) {
+    .userImg{
+        height: 150px;
+        width: 150px;
+    }
+
+    h3{
+        font-size: 18pt;
+    }
+    
+    .btn{
+        font-size: 16px;
+    }
+
+    .userPageContent{
+        margin-left: 15px;
+    }
+    
+}
+
+@media (max-width: 460px) {
+    .userPage{
+        font-size: 12px;
+    }
+
+    .userPageContent{
+        margin-left: 15px;
+    }
+    
+    h3{
+        font-size: 18pt;
+    }
+
+    .userImg{
+        height: 100px;
+        width: 100px;
+    }
+
+    .editInput{
+        min-width: 120px;
+    }
+
+    .userInfoContent3{
+        margin-left: 5px;
+    }
+
+    .btn{
+        font-size: 14px;
+    }
+    
+}
+
+
+@media (max-width: 370px) {
+    .userPage{
+        font-size: 10px;
+    }
+
+    h3{
+        font-size: 16pt;
+    }
+
+    .userImg{
+        height: 80px;
+        width: 80px;
+    }
+
+    .editInput{
+        min-width: 110px;
+    }
+
+    .userInfoContent3{
+        margin-left: 4px;
+    }
+
+    .btn{
+        font-size: 12px;
+    }
+    
+}

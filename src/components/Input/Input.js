@@ -2,7 +2,7 @@ import React from 'react';
 import './Input.css';
 
 
-const Input = ({ atribute, handleChange, param }) => {
+const Input = ({ atribute, handleChange }) => {
     return(
         <div className='input-container'>
             <input 
@@ -13,7 +13,6 @@ const Input = ({ atribute, handleChange, param }) => {
                 onChange={ (e) => handleChange(e.target.id, e.target.value) }
             />
         </div>
-
     );
 };
 

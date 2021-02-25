@@ -4,6 +4,7 @@ import LoginInput from '../../components/Input/loginInput';
 import { useHistory } from 'react-router-dom';
 import useUser from '../../hook/useUser'
 import './login.css'
+import getUser from "../../services/getUser";
 
 
 const LoginButton = () => {
@@ -14,7 +15,7 @@ const LoginButton = () => {
   const [ wrongPassword, setWrongPassword ] = useState(false);
   const [ wrongEmail, setWrongEmail ] = useState(false);
   const history = useHistory();
-  const {login, isLogged} = useUser();
+  const {login, isLogged, setUserEmail} = useUser();
 
   useEffect(() => {
     if (isLogged) {
@@ -37,16 +38,14 @@ const LoginButton = () => {
 
 
   const getUsuarios = async (param) => {
-    let jsonData;
     if(param.email.length > 0 && param.password.length > 0) {
-      try {
-        const response = await fetch(`http://localhost:5000/usuarios/${param.email}`)
-        jsonData = await response.json();
+      try { 
+        const jsonData = await getUser({email: param.email})
         if(jsonData.email.length > 0){
           setWrongEmail(false);
           if(jsonData.contrasenia === param.password){
             setWrongPassword(false);
-            console.log('llego')
+            setUserEmail(jsonData.email);
             login();
           } else {
             setWrongPassword(true);
@@ -74,7 +73,7 @@ const LoginButton = () => {
   return (
     
     <div className='login-container'>
-      <div className='login-content'>
+      <form className='login-content' onClick={handleSubmit}>
         { wrongEmail &&
           <label className='label-alert'>
             Email incorrecto
@@ -85,6 +84,10 @@ const LoginButton = () => {
             Contraseña incorrecta
           </label>
         }
+
+        {//Hacer esto un formulario
+        }
+
         <Label htmlFor='email' text="email"/>
         <LoginInput
           atribute={{
@@ -110,11 +113,11 @@ const LoginButton = () => {
           <small className='small-content'>Contraseña demasiado corta</small>
         }
         <div className='submit-button-container'>
-          <button className="submit-button btn btn-primary" onClick={ handleSubmit }>
+          <button className="submit-button btn btn-primary" type='submit' >
             Log In
           </button>
         </div>      
-      </div>
+      </form>
     </div>  
   );
 };

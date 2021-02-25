@@ -1,0 +1,8 @@
+.prodContent{
+    display: flex;
+    flex-direction: row;
+}
+
+.imgtam{
+    max-width: 75%;
+}

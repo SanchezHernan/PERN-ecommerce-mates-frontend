@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import './form.css';
-import Input from '../Input/Input';
+import React, { useState } from 'react'
+import './form.css'
+import Input from '../Input/Input'
+import Button from '../Button/button'
 
 const MyForm = () => {
   const [ buscado, setBuscado ] = useState('');
@@ -9,7 +10,14 @@ const MyForm = () => {
     if (id === 'buscar'){
       setBuscado(value);
     }
+    console.log(buscado)
   };
+
+  function handleClick(e) {
+    e.preventDefault()
+    console.log('hola')
+  }
+
 
   return(
     <form className='form-container'>
@@ -25,15 +33,13 @@ const MyForm = () => {
             handleChange={ handleChange }
           />
         </div>
-        <button type='submit' className='btn btn-outline-primary' value='Submit'>
-            Buscar
-        </button>
-
-        <button type='submit' className='btn btn-outline-primary' value='Submit'>
-          Buscar
-        </button>
-        
-
+        <Button
+          atr={{
+            text: 'Buscar',
+            type: 'button'
+          }}
+          handleClick={ handleClick }
+        />
       </div>
     </form>
   )

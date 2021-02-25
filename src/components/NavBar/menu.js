@@ -6,10 +6,8 @@ function Menu() {
 
     const{marcar} = useOptions();
 
-    const handleClick = (e) => {
-        e.preventDefault();
+    const handleClick = () => {
         marcar('0');
-        console.log('1');
     }
 
     return (

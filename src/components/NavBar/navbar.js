@@ -1,31 +1,57 @@
-import mate1 from '../../images/mate1.png'
-import carrito from '../../images/carrito3.png'
-import user from '../../images/user1.png'
+import mateImg from '../../images/mate1.png'
+import carritoImg from '../../images/carrito3.png'
+import userImg from '../../images/user1.png'
 import MyForm from '../Form/form'
 import './navbar.css'
+import { useState } from 'react'
+import useUser from '../../hook/useUser'
+import { Link } from 'react-router-dom'
 
 
 function NavBar() {
+
+    const [show, setShow] = useState(false);
+    const {logout} = useUser();
+
+    const myFunction = () => {
+        setShow(true);
+    }
+
+    const myOtherFunction = () => {
+        setShow(false);
+    }
+
+
     return (
         
-            <nav className="navbar navbar-dark bg-dark">
-                <a className="navbar-brand navbar-content-1" href="#">
-                    <img src={mate1} className="d-inline-block align-top imglad mate" alt="" loading="lazy"/>
-                    Remate Amargo
-                </a>  
-                <div className='navbar-content-2'>
-                    <MyForm/>
+        <nav className="navbar navbar-dark bg-dark">
+            <Link className="navbar-brand navbar-content-1" to="/home">
+                <img src={mateImg} className="d-inline-block align-top imglad mate" alt="" loading="lazy"/>
+                Remate Amargo
+            </Link>  
+            <div className='navbar-content-2'>
+                <MyForm/>
+            </div>
+            <div>
+            <div className="navbar-content-3" href="#">
+                <Link to='/cart' >
+                    <img src={carritoImg} className="carrito" alt="" loading="lazy"/>
+                </Link>
+                <div>
+                <div className='dropdown' onMouseEnter={myFunction} onMouseLeave={myOtherFunction}>
+                    <img src={userImg} className="user" alt="" loading="lazy"/>
+                    {show && 
+                        <div id='myDropdown' className='dropdown-content'>
+                            <Link to='/user' >Ususario</Link>
+                            <a>Mis Compras</a>
+                            <a className='logout' href='#' onClick={logout}>Log out</a>
+                        </div>
+                    }
                 </div>
-                <a className="navbar-content-3" href="#">
-                    <div>
-                        <img src={carrito} className="carrito" alt="" loading="lazy"/>
-                    </div>
-                    <div>
-                        <img src={user} className="user" alt="" loading="lazy"/>
-                    </div>
-                </a>
-            </nav>
-        
+                </div>
+            </div>
+            </div>
+        </nav>
     );
 }
   
