@@ -6,6 +6,8 @@ import Login from './Pages/loginPage/login'
 import UserPage from './Pages/userPage/userPage'
 import ProductPage from './Pages/productPage/productPage'
 import CartPage from './Pages/cartPage/cartPage'
+import PurchasesPage from './Pages/purchasesPage/purchasesPage'
+import ComboPage from './Pages/comboPage/comboPage'
 
 import React from "react";
 import {
@@ -31,6 +33,8 @@ function App() {
             <Route exact path='/user' component={UserPage}/>
             <Route exact path='/product' component={ProductPage}/>
             <Route exact path='/cart' component={CartPage}/>
+            <Route exact path='/purchases' component={PurchasesPage}/>
+            <Route exact path='/combo' component={ComboPage}/>
             <Route path="*"><div>404 Not found </div></Route>
           </Switch>
         </Router>

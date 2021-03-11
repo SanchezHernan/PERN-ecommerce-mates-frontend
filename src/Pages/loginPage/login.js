@@ -5,6 +5,8 @@ import { useHistory } from 'react-router-dom';
 import useUser from '../../hook/useUser'
 import './login.css'
 import getUser from "../../services/getUser";
+import postCart from "../../services/postCart";
+import putUserCart from "../../services/putUserCart";
 
 
 const LoginButton = () => {
@@ -41,12 +43,22 @@ const LoginButton = () => {
     if(param.email.length > 0 && param.password.length > 0) {
       try { 
         const jsonData = await getUser({email: param.email})
+        if(!jsonData.carritoactual){
+          console.log('Creando Carrito');
+          try {
+            const cartId = await postCart()
+            const resp = await putUserCart(param.email, cartId[0].codigo)
+            console.log(resp);
+          } catch (err) {
+            console.error(err)
+          }    
+        }
         if(jsonData.email.length > 0){
           setWrongEmail(false);
           if(jsonData.contrasenia === param.password){
             setWrongPassword(false);
             setUserEmail(jsonData.email);
-            login();
+            login(jsonData);
           } else {
             setWrongPassword(true);
           }

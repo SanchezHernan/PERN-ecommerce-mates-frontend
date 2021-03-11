@@ -43,7 +43,7 @@ function NavBar() {
                     {show && 
                         <div id='myDropdown' className='dropdown-content'>
                             <Link to='/user' >Ususario</Link>
-                            <a>Mis Compras</a>
+                            <Link to='/purchases'>Mis Compras</Link>
                             <a className='logout' href='#' onClick={logout}>Log out</a>
                         </div>
                     }

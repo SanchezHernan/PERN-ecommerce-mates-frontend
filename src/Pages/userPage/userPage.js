@@ -8,6 +8,7 @@ import userImg from '../../images/user2.png'
 import './userPage.css'
 import getUser from '../../services/getUser';
 import Button from '../../components/Button/button';
+import updateUser from '../../services/updateUser';
 
 const UserPage = () => {
 
@@ -15,6 +16,11 @@ const UserPage = () => {
     const {isLogged, email} = useUser();
     const history = useHistory();
     const [showEdit, setShowEdit] = useState(false);
+    const [nombre, setNombre] = useState('');
+    const [apellido, setApellido] = useState('');
+    const [ciudad, setCiudad] = useState('');
+    const [direccion, setDireccion] = useState('');
+    const [telefono, setTelefono] = useState('');
 
     const editarPerfil = () => {
         if (showEdit) setShowEdit(false)
@@ -22,14 +28,30 @@ const UserPage = () => {
     }
 
     const guardarCambios = () => {
-        console.log('cambios guardados');
+        updateUser(nombre, apellido, ciudad, direccion, telefono, email)
     }
 
-    const handleChange = () => {
-        console.log('hola');
+    const handleNombre = (e)=> {
+        setNombre(e.target.value)
     }
+
+    const handleApellido = (e)=> {
+        setApellido(e.target.value)
+    }
+
+    const handleCiudad = (e)=> {
+        setCiudad(e.target.value)
+    }
+
+    const handleDireccion = (e)=> {
+        setDireccion(e.target.value)
+    }
+
+    const handleTelefono = (e)=> {
+        setTelefono(e.target.value)
+    }
+
     useEffect(() => {
-        console.log('push')
         if (!isLogged) {
           history.push('/');
         }
@@ -38,7 +60,6 @@ const UserPage = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log({email});
             const response = await getUser({email})
             setUsuario(response);
         }
@@ -50,6 +71,7 @@ const UserPage = () => {
         <div>
             <NavBar/>
             <div className='userPage'>
+                {console.log('render')}
                 <div>
                     <img src={userImg} className="userImg" alt="" loading="lazy"/>
                 </div>
@@ -61,24 +83,14 @@ const UserPage = () => {
                                 <div className='userInfoContent1'>
                                     <p>Nombre: </p>
                                     <p>Apellido: </p>
-                                    <p>e-mail: </p>
                                     <p>Ciudad: </p>
                                     <p>Direccion: </p>
                                     <p>Telefono: </p>
-                                    {/*showEdit &&
-                                    <Input
-                                        id={'1'}
-                                        type={'text'}
-                                        className={'editInput'}
-                                        placeholder={usuario.nombre}
-                                        onChange={ (e) => handleChange(e.target.id, e.target.value) }
-                                    />*/}
                                 </div>
                                 {showEdit ?
                                 <div className='userInfoContent2'>
                                     <p>{usuario.nombre}</p> 
                                     <p>{usuario.apellido} </p>
-                                    <p>{usuario.email}</p>
                                     <p>{usuario.ciudad}</p>
                                     <p>{usuario.direccion}</p>
                                     <p>{usuario.telefono}</p>
@@ -92,7 +104,7 @@ const UserPage = () => {
                                         className: 'editInput',
                                         placeholder: usuario.nombre,
                                         }}
-                                        handleChange={ handleChange }
+                                        handleChange={ handleNombre }
                                     />
                                     <Input 
                                         atribute={{
@@ -101,16 +113,7 @@ const UserPage = () => {
                                         className: 'editInput',
                                         placeholder: usuario.apellido,
                                         }}
-                                        handleChange={ handleChange }
-                                    />
-                                    <Input 
-                                        atribute={{
-                                        id: '3',
-                                        type: 'text',
-                                        className: 'editInput',
-                                        placeholder: usuario.email,
-                                        }}
-                                        handleChange={ handleChange }
+                                        handleChange={ handleApellido }
                                     />
                                     <Input 
                                         atribute={{
@@ -119,7 +122,7 @@ const UserPage = () => {
                                         className: 'editInput',
                                         placeholder: usuario.ciudad,
                                         }}
-                                        handleChange={ handleChange }
+                                        handleChange={ handleCiudad }
                                     />
                                     <Input 
                                         atribute={{
@@ -128,7 +131,7 @@ const UserPage = () => {
                                         className: 'editInput',
                                         placeholder: usuario.direccion,
                                         }}
-                                        handleChange={ handleChange }
+                                        handleChange={ handleDireccion}
                                     />
                                     <Input 
                                         atribute={{
@@ -137,7 +140,7 @@ const UserPage = () => {
                                         className: 'editInput',
                                         placeholder: usuario.telefono,
                                         }}
-                                        handleChange={ handleChange }
+                                        handleChange={ handleTelefono }
                                     />
                                 </div>
                                 }
@@ -172,6 +175,5 @@ const UserPage = () => {
         
     )
 }
-
 
 export default UserPage;

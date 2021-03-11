@@ -9,7 +9,9 @@ export default function useOptions () {
         orden,
         setOrden,
         prodId,
-        setProdId
+        setProdId,
+        combo,
+        setCombo
     } = useContext(OptionContext);
 
     const marcar = (value) => {
@@ -30,6 +32,11 @@ export default function useOptions () {
         setProdId(0);
     }
 
+    const isCombo = (isCombo) => {
+        window.sessionStorage.setItem('isCombo', isCombo)
+        setCombo(isCombo);
+    }
+
     return {
         option,
         marcar,
@@ -37,6 +44,8 @@ export default function useOptions () {
         establecerOrden,
         prodId,
         changeProdId,
-        cleanProd
+        cleanProd,
+        combo,
+        isCombo
     }
 }

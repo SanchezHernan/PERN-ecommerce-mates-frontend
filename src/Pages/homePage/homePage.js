@@ -6,32 +6,28 @@ import Side from '../../components/Side/side'
 import { useHistory } from 'react-router-dom'
 import useOptions from '../../hook/useOptions'
 import useUser from '../../hook/useUser'
+import useDescuento from "../../hook/useDescuento";
 import './homePage.css'
 
 import getProducts from "../../services/getProducts"
 import getOffers from "../../services/getOffers"
+import getCombos from "../../services/getCombos";
+
 
 
 const HomePage = () => {
 
-  console.log('render of home');
-
   //STATE
-  const history = useHistory();
-  const {isLogged} = useUser();
-  const {option, orden} = useOptions();
-  const [prodInfo, setProdInfo] = useState([]);
-  const [contador, setContador] = useState(0);
+  const history = useHistory()
+  const {isLogged} = useUser()
+  const {option, orden, combo, isCombo} = useOptions()
+  const {calcularDescuento} = useDescuento()
+
+  const [prodInfo, setProdInfo] = useState([])
+  const [contador, setContador] = useState(0)
+  
 
   //FUNCIONES
-  const calcularDescuento = (p) => {
-    const prod = p;
-    if (p.porcdescuento !== 0){
-      prod.porcdescuento = (p.precio - (p.precio * p.porcdescuento / 100));
-    }
-    return prod;
-  }
-  
 
   const ordenarPorMenorPrecio = (array) => {
     return (array.sort((a, b) => {
@@ -81,18 +77,24 @@ const HomePage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (option !== '0') {
-        const request = await getProducts({option});
-        const info = request.map((producto) => calcularDescuento(producto));
-        setProdInfo(info)
-      } else {
+      if (option === '0') {
+        isCombo(false)
         const request = await getOffers();
-        const info = request.map((producto) => calcularDescuento(producto));
-        setProdInfo(info);
+        const info = request.map((producto) => calcularDescuento(producto))
+        setProdInfo(info)
+      } else if (option === '5'){
+        isCombo(true)
+        const resp = await getCombos()
+        setProdInfo(resp)
+      } else {
+        isCombo(false)
+        const request = await getProducts({option})
+        const info = request.map((producto) => calcularDescuento(producto))
+        setProdInfo(info)        
       }
     }
     fetchData()
-  }, [option]);
+  }, [option])
 
   
   useEffect(() => {
@@ -120,7 +122,19 @@ const HomePage = () => {
           </div>
           <div className="main">
             <Menu/> 
+              {combo ?
               <div className='ofertas'>
+                {prodInfo.map((elemento) =>
+                  <Card className='oferta'
+                    key={elemento.codigo}
+                    nombre={elemento.nombre}
+                    precio={elemento.precio}
+                    codigo={elemento.codigo}
+                  />
+                )}
+              </div>
+              :
+              <div className='ofertas'> 
                 {prodInfo.map((elemento) => 
                   <Card className='oferta'
                     key={elemento.codigo}
@@ -132,6 +146,7 @@ const HomePage = () => {
                   />
                 )}
               </div>
+              }
           </div>  
         </div>
       </div>

@@ -1,6 +1,6 @@
 import './price.css'
 
-const Price = ({precio, descuento}) => {
+const Price = ({precio, descuento = 0}) => {
 
     return (
         <div className='price-container'>
