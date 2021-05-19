@@ -1,0 +1,42 @@
+.users-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.user-content{
+    margin: 10px;
+    align-self: center;
+    width: 95%;
+    padding: 5px;
+}
+
+.table{
+    margin-right: 5px;
+    text-align: start;
+    border-top: groove;
+    border-left: groove;
+    box-shadow: 10px 5px 5px darkslategrey;
+}
+
+.button{
+    display: flex;
+    align-self: flex-start;
+    width: 50%;
+}
+
+.user-button{
+    margin-bottom: 10px;
+    width: 45%;
+    max-width: 600px;
+}
+
+.usuarios-buttons{
+    display: flex;
+    flex-direction: row;
+}
+
+@media (max-width: 650px) {
+    .button{
+        width: 70%;
+    }
+}

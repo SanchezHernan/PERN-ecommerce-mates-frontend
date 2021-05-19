@@ -5,7 +5,14 @@
 }
 
 .prodImgContent{
-    flex: 1;
+    display: flex;
+    flex-direction: column;
+    flex: 1;   
+    border-style: groove;
+    border-radius: 5px;
+    margin: 10px;
+    justify-content: center;
+    box-shadow: 10px 5px 5px darkslategrey;
 }
 
 .prodInfoContent{
@@ -14,12 +21,17 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    
+}
+
+.imagen{
+    margin: 10px;
 }
 
 .imgtam{
     max-width: 75%;
 }
+
+
 
 .btn-group{
     justify-content: center;
@@ -138,4 +150,10 @@ a[href*="intent"] {
   
 .rating2 a {
     float:none
+}
+
+.card-button{
+    margin-top: 10px;
+    width: 60%;
+    align-self: center;
 }

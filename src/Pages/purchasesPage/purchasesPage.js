@@ -1,22 +1,28 @@
 import NavBar from '../../components/NavBar/navbar'
+import Button from '../../components/Button/button'
 import useUser from '../../hook/useUser'
 import { useHistory } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import './purchasesPage.css'
-//import getUser from '../../services/getUser'
 import getPurchases from '../../services/getPurchases'
+import putPurchaseState from '../../services/putPurchaseState'
+import useOptions from '../../hook/useOptions'
+
 
 const PurchasesPage = () => {
 
     let carrritoactual
     let parcialList = []
     let totalList = []
-    //const [usuario, setUsuario] = useState(null)
+    const {changeProdId, changeComboId} = useOptions()
     const {isLogged, email} = useUser()
     const history = useHistory()
     const [compras, setCompras] = useState(null)
-    const [comprasPorCarrito, setComprasPorCarrito] = useState(null)
+    const [comprasPorCarrito, setComprasPorCarrito] = useState([])
     const [witchDisplay, setWitchDisplay] = useState([])
+    const [msjMode, setMsjMode] = useState(false)
+    const [estadoCompra, setEstadoCompra] = useState('')
+
 
     const handleClick = (e, i) => {
         e.preventDefault()
@@ -30,20 +36,48 @@ const PurchasesPage = () => {
         }
     } 
 
+    const finalizarCompra = async(data) => {
+        putPurchaseState(data, 'FINALIZADA')
+        alert('Compra Finalizada con exito')
+        const purchases = await getPurchases(email)
+        setCompras(purchases)
+        setMsjMode(true)
+        setEstadoCompra('FINALIZADA')
+    }
+
+    const cancelarCompra = async(data) => {
+        putPurchaseState(data, 'CANCELADA')
+        alert('Compra cancelada')
+        const purchases = await getPurchases(email)
+        setCompras(purchases)
+        setMsjMode(true)
+        setEstadoCompra('CANCELADA')
+    }
+
+    const goToProd = (e, prodId, iscombo) => {
+        e.preventDefault()
+        if (!iscombo){
+            changeProdId(prodId)
+            history.push('/product')
+        }
+        else{
+            changeComboId(prodId)
+            history.push('/combo')
+        }
+    }
+
+    const aceptar = () => setMsjMode(false)
+
     useEffect(() => {
         if (!isLogged) {
           history.push('/');
         }
     }, [isLogged, history])
 
-
     useEffect(() => {
         const fetchData = async () => {
-            //const response = await getUser({email})
-            //setUsuario(response);
             const purchases = await getPurchases(email)
             setCompras(purchases)
-            console.log(purchases);
         }
         fetchData();
     }, [email])
@@ -61,41 +95,73 @@ const PurchasesPage = () => {
             })
             totalList.push(parcialList)
         }
-        setComprasPorCarrito(totalList) 
+        setComprasPorCarrito(totalList)
     }, [compras])
 
      
     return(
         <div>
             <NavBar/>
-            <div className='purchasesContent'>
-                {comprasPorCarrito &&
-                    <div>
-                        {comprasPorCarrito.map((prodsDeCompra, i) =>  
-                            <div className='card cardStyle'>
-                                <a className="card-header" onClick={(e) => handleClick(e, i)} href='#'>
+            {!msjMode ?
+                <div className='purchasesContent'>    
+                    {comprasPorCarrito.map((prodsDeCompra, i) =>  
+                        <div className='card cardStyle' key={prodsDeCompra[0].carrito}>
+                            <div className="card-header">
+                                <a className='card-header-info' onClick={(e) => handleClick(e, i)} href='#'>
                                     <h4>Comprado el {prodsDeCompra[0].fecha.slice(0,10)}</h4>
                                     <h4>Estado: {prodsDeCompra[0].estado}</h4>
                                 </a>
-                                {witchDisplay.includes(i) &&
-                                
-                                <div className='list-container'>
-                                    <ul className="list-group">
-                                        {
-                                            prodsDeCompra.map((producto, i) => 
-                                            <div className='list-content'>
-                                                <li className="list-group-item" key={i}>{producto.nombre}</li>
-                                            </div>
-                                        )}
-                                    </ul>
-                                    <button>Finalizar Compra</button>
+                                {prodsDeCompra[0].estado === 'ESPERA' ? 
+                                <div className='card-header-button'>
+                                    <Button
+                                        atr={{
+                                            text: 'Finalizar Compra',
+                                            type: 'button',
+                                            className: 'btn btn-outline-primary mb5'
+                                        }}
+                                        handleClick={() => finalizarCompra(prodsDeCompra[0].carrito) }
+                                    />
+                                    <Button
+                                        atr={{
+                                            text: 'Devolver Compra',
+                                            type: 'button',
+                                            className: 'btn btn-outline-primary mb5'
+                                        }}
+                                        handleClick={() => cancelarCompra(prodsDeCompra[0].carrito) }
+                                    />
                                 </div>
+                                : prodsDeCompra[0].estado === 'FINALIZADA' ?
+                                    <h4 className='finalizada'>Compra Finalizada</h4>
+                                :
+                                    <h4 className='cancelada'>Compra Cancelada</h4>
                                 }
                             </div>
-                        )}
-                    </div>
-                }        
-            </div>
+                            {witchDisplay.includes(i) &&
+                            
+                            <div className='list-container'>
+                                <ul className="list-group">
+                                    {
+                                        prodsDeCompra.map((producto, i) => 
+                                        <div className='list-content' key={producto.codigo}>
+                                            <li className="list-group-item" key={i}>
+                                                <a onClick={(e) => goToProd(e, producto.prodid, producto.iscombo)} href='/product'>
+                                                    {producto.nombre}
+                                                </a>        
+                                            </li>
+                                        </div>
+                                    )}
+                                </ul>
+                            </div>
+                            }
+                        </div>
+                    )}
+                </div>
+            :
+                <div className='mensaje-actualizacion'>
+                    <h3>Su compra ha sido {estadoCompra}</h3>
+                    <button className='btn btn-outline-dark' onClick={aceptar}>Aceptar</button>
+                </div>
+            }        
         </div>
     )
 }

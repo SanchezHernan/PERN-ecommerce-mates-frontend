@@ -10,8 +10,10 @@ export default function useOptions () {
         setOrden,
         prodId,
         setProdId,
-        combo,
-        setCombo
+        comboId,
+        setComboId,
+        search,
+        setSearch,
     } = useContext(OptionContext);
 
     const marcar = (value) => {
@@ -32,9 +34,14 @@ export default function useOptions () {
         setProdId(0);
     }
 
-    const isCombo = (isCombo) => {
-        window.sessionStorage.setItem('isCombo', isCombo)
-        setCombo(isCombo);
+    const changeComboId = (id) => {
+        window.sessionStorage.setItem('comboId', id)
+        setComboId(id);
+    }
+
+    const searchText = (text) => {
+        window.sessionStorage.setItem('search', text)
+        setSearch(text);
     }
 
     return {
@@ -45,7 +52,9 @@ export default function useOptions () {
         prodId,
         changeProdId,
         cleanProd,
-        combo,
-        isCombo
+        comboId,
+        changeComboId,
+        search,
+        searchText
     }
 }

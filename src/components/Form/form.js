@@ -2,22 +2,24 @@ import React, { useState } from 'react'
 import './form.css'
 import Input from '../Input/Input'
 import Button from '../Button/button'
+import useOptions from '../../hook/useOptions'
+
 
 const MyForm = () => {
-  const [ buscado, setBuscado ] = useState('');
+  const [ buscado, setBuscado ] = useState('')
+  const { searchText } = useOptions()
 
   function handleChange(id, value) {
-    if (id === 'buscar'){
+    if (id === 'buscar')
       setBuscado(value);
-    }
-    console.log(buscado)
   };
 
   function handleClick(e) {
     e.preventDefault()
-    console.log('hola')
+    searchText(buscado)
   }
 
+ 
 
   return(
     <form className='form-container'>
@@ -33,13 +35,15 @@ const MyForm = () => {
             handleChange={ handleChange }
           />
         </div>
-        <Button
-          atr={{
-            text: 'Buscar',
-            type: 'button'
-          }}
-          handleClick={ handleClick }
-        />
+        <div className='button-cont'>
+          <Button
+            atr={{
+              text: 'Buscar',
+              type: 'submit'
+            }}
+            handleClick={ handleClick }
+          />
+        </div>
       </div>
     </form>
   )

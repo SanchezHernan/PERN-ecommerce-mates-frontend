@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from 'react-router-dom'
+
 import NavBar from '../../components/NavBar/navbar'
 import Menu from '../../components/NavBar/menu'
 import Card from '../../components/Card/card'
+import ComboCard from '../../components/Card/comboCard'
 import Side from '../../components/Side/side'
-import { useHistory } from 'react-router-dom'
+
 import useOptions from '../../hook/useOptions'
 import useUser from '../../hook/useUser'
 import useDescuento from "../../hook/useDescuento";
 import './homePage.css'
 
-import getProducts from "../../services/getProducts"
+import getProductsTipe from "../../services/getProductsTipe"
 import getOffers from "../../services/getOffers"
-import getCombos from "../../services/getCombos";
+import getCombos from "../../services/getCombos"
+import getSearchResults from '../../services/getSearchResults'
 
 
 
@@ -20,47 +24,42 @@ const HomePage = () => {
   //STATE
   const history = useHistory()
   const {isLogged} = useUser()
-  const {option, orden, combo, isCombo} = useOptions()
+  const {option, orden, search} = useOptions()
   const {calcularDescuento} = useDescuento()
 
   const [prodInfo, setProdInfo] = useState([])
   const [contador, setContador] = useState(0)
+  const [combo, isCombo] = useState(false)
   
 
   //FUNCIONES
 
   const ordenarPorMenorPrecio = (array) => {
     return (array.sort((a, b) => {
-        if (a.precio < b.precio){
+        if (a.precio < b.precio)
             return -1;
-        }
-        else if (a.precio > b.precio){
+        else if (a.precio > b.precio)
             return 1;
-        }
         return 0;
     }))
   }
 
   const ordenarPorMayorPrecio = (array) => {
     return (array.sort((a, b) => {
-        if (a.precio > b.precio){
+        if (a.precio > b.precio)
             return -1;
-        }
-        else if (a.precio < b.precio){
+        else if (a.precio < b.precio)
             return 1;
-        }
         return 0;
     }))
   }
 
   const ordenarPorCalificacion = (array) => {
     return (array.sort((a, b) => {
-        if (a.calificacion > b.calificacion){
+        if (a.calificacion > b.calificacion)
             return -1;
-        }
-        else if (a.calificacion < b.calificacion){
+        else if (a.calificacion < b.calificacion)
             return 1;
-        }
         return 0;
     }))
   }
@@ -68,11 +67,17 @@ const HomePage = () => {
 
   //EFECTOS
   useEffect(() => {
-    if (!isLogged) {
-      history.push('/');
-      console.log(contador)
-    }
+    if (!isLogged) history.push('/')
   }, [isLogged, history])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getSearchResults(search)
+      const info = data.map((producto) => calcularDescuento(producto))
+      setProdInfo(info)
+    }
+    fetchData()
+  }, [search])
 
 
   useEffect(() => {
@@ -82,13 +87,13 @@ const HomePage = () => {
         const request = await getOffers();
         const info = request.map((producto) => calcularDescuento(producto))
         setProdInfo(info)
-      } else if (option === '5'){
+      } else if (option === '6'){
         isCombo(true)
         const resp = await getCombos()
         setProdInfo(resp)
       } else {
         isCombo(false)
-        const request = await getProducts({option})
+        const request = await getProductsTipe(option)
         const info = request.map((producto) => calcularDescuento(producto))
         setProdInfo(info)        
       }
@@ -99,18 +104,14 @@ const HomePage = () => {
   
   useEffect(() => {
     let porOrdenar = prodInfo
-    if (orden === '1'){
-      setProdInfo(ordenarPorMenorPrecio(porOrdenar));
-    } else if (orden === '2') {
-      setProdInfo(ordenarPorMayorPrecio(porOrdenar));
-    }
-    else if (orden === '3'){
-      setProdInfo(ordenarPorCalificacion(porOrdenar));
-    }
-    console.log(prodInfo)
-    setContador(contador + 1);
+    if (orden === '1')
+      setProdInfo(ordenarPorMenorPrecio(porOrdenar))
+    else if (orden === '2') 
+      setProdInfo(ordenarPorMayorPrecio(porOrdenar))
+    else if (orden === '3')
+      setProdInfo(ordenarPorCalificacion(porOrdenar))
+    setContador(contador + 1)
   }, [orden])
-
 
 
   return(
@@ -125,7 +126,7 @@ const HomePage = () => {
               {combo ?
               <div className='ofertas'>
                 {prodInfo.map((elemento) =>
-                  <Card className='oferta'
+                  <ComboCard className='oferta'
                     key={elemento.codigo}
                     nombre={elemento.nombre}
                     precio={elemento.precio}

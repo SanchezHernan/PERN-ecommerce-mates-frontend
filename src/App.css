@@ -3,12 +3,11 @@
 }
 
 
-
 .ofertas{
   display: flex;
   justify-content: space-around;
   align-items: center;
-  min-height: 80vh;
+  min-height: 85vh;
 }
 
 .oferta{

@@ -1,13 +1,16 @@
 import {useCallback, useContext} from 'react';
 import Context from '../context/userContext';
 
-
 export default function useUser () {
     const {
         isLogged,
         setIsLogged,
         email,
         setEmail,
+        adminEmail,
+        setAdminEmail,
+        adminRol,
+        setAdminRol
     } = useContext(Context)
 
     const login = useCallback(() => {
@@ -20,6 +23,8 @@ export default function useUser () {
         window.sessionStorage.removeItem('userEmail')
         window.sessionStorage.removeItem('carrito')
         window.sessionStorage.removeItem('prodId')
+        window.sessionStorage.removeItem('adminEmail')
+        window.sessionStorage.removeItem('adminRol')
         setIsLogged(false)
     }, [setIsLogged])
 
@@ -28,6 +33,12 @@ export default function useUser () {
         setEmail(email);
     }
 
+    const setAdminInfo = (email, rol) => {
+        window.sessionStorage.setItem('adminEmail', email)
+        window.sessionStorage.setItem('adminRol', rol)
+        setAdminEmail(email)
+        setAdminRol(rol);
+    }
 
     return {
         isLogged,
@@ -35,5 +46,8 @@ export default function useUser () {
         login,
         logout,
         setUserEmail,
+        adminEmail,
+        adminRol,
+        setAdminInfo
     }
 }

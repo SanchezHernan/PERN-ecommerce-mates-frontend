@@ -4,12 +4,28 @@
 }
 
 .cardStyle{
-    width: 98%;
     margin: 10px;
 }
 
 .card-header{
+    display: flex;
+    flex-direction: row;
     width: 100%;
+}
+
+.card-header-info{
+    flex: 1;
+}
+
+.card-header-button{
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.card-button{
+    height: 90%;
 }
 
 .list-container{
@@ -29,4 +45,14 @@
 
 .list-group-item{
     flex: 2;
+}
+
+.cancelada{
+    color: red;
+}
+
+.mensaje-actualizacion{
+    display: flex;
+    flex-direction: column; 
+    margin: 25%;
 }

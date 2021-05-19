@@ -1,0 +1,38 @@
+.administradores{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.administradores-container{
+    display: flex;
+    flex-direction: column;
+    margin: 25px;
+    width: 90%;
+    max-width: 1250px;
+    align-self: center;
+}
+
+.administradores-content-1{
+    display: flex;
+    flex-direction: row;
+}
+
+.administradores-content-2{
+    display: flex;
+    flex-direction: row;
+}
+
+.list-group-1{
+    width: 50%;
+}
+
+.h63{
+    padding: 19px;
+}
+
+@media (max-width: 870px) {
+    .h63{
+        padding: 20.8px;
+    }
+}

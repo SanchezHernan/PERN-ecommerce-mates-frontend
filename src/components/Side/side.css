@@ -7,7 +7,24 @@
     flex-direction: column;
     text-align: start;
 }
-    
+
+.contacto{
+    position: relative;
+}
+
+.contacto-content{
+    position: absolute;
+    color: black;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    bottom: 1px;
+    left: 60%;
+    min-width: 200px;
+    padding: 10px;
+    background-color: #f1f1f1;
+}
+
+
 .bottom{
     position: absolute;
     width: 85%;

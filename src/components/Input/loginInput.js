@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './loginInput.css'
 
 
 const LoginInput = ({ atribute, handleChange, param }) => {

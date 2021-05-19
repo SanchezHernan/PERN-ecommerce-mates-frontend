@@ -1,21 +1,39 @@
-.userPage{
+.userPage-body{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+    align-content: center;
+    justify-content: center;
 }
 
 .userPageContent{
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: start;
-    margin-left: 20px;
-    flex: 3;
+    flex-direction: row;
+    justify-content: space-around;
+    align-self: center;
+    justify-self: center;
+    align-items: center;
+    margin: 20px;
+    border-style: groove;
+    border-radius: 10px;
+    box-shadow: 10px 5px 5px darkslategrey;
+    width: 90%;
+    max-width: 1000px;
 }
 
+.text-start{
+    text-align: start;
+}
+
+.userPageContent1{
+    flex: 2;
+    padding: 10px;
+}
+
+
 .userPageContent2{
+    flex: 3;
     width: 100%;
+    padding: 10px;
 }
 
 
@@ -41,8 +59,8 @@
 
 .editInput{
     margin-top: 10px;
+    margin-bottom: 15px;
     min-width: 150px;
-    width: 80%;
 }
 
 
@@ -51,26 +69,123 @@
     padding-bottom: 8px;
 }
 
-.buttons{
+.buttons-column{
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    flex-direction: column;
+}
+
+.buttons-row{
     display: flex;
     margin-top: 5px;
     flex-direction: row;
 }
 
-.button{
-    margin: 5px;
+.userpage-button{
+    display: flex;
+    margin-bottom: 15px;
+    width: 70%;
 }
 
-@media (max-width: 550px) {
-    .userImg{
-        height: 150px;
-        width: 150px;
-    }
+.secondary-mode{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
 
-    h3{
-        font-size: 18pt;
+.userPage-eliminacion{
+    display: flex;
+    flex-direction: row;
+    margin: 15px;
+    padding: 10px;
+    border-style: groove;
+    border-radius: 10px;
+    box-shadow: 10px 5px 5px darkslategrey;
+    width: 90%;
+    max-width: 1000px;
+}
+
+.userPageElimination1{
+    flex: 2;
+    margin: 10px;
+}
+
+.userPageElimination2{
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.elimination-title{
+    font-size: 1.75rem;
+}
+
+.elimination-back-button{
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    margin: 15px;
+    width: 200px;
+}
+
+
+.modeChangePassword{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 1000px;
+}
+
+
+.changePasswordContent{
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    padding: 10px;
+    border-style: groove;
+    border-radius: 5px;
+    box-shadow: 10px 5px 5px darkslategrey;
+    width: 100%;
+}
+
+.w40{
+    width: 40%;
+    max-width: 500px;
+}
+
+
+@media (max-width: 800px) {
+    .userPage{
+        width: 93%;
     }
-    
+    .userPageContent{
+        margin: 10px;
+    }
+    .userPageContent1{
+        width: 250px;
+    }
+    .elimination-title{
+        font-size: 1.45rem;
+    }
+    .userPageContent1{
+        padding: 3px 3px 3px 5px;
+    }
+    .userPageContent{
+        margin-left: 10px;
+    }
+    .userPage-eliminacion{
+        margin-right: 5px;
+        padding: 5px;
+    }
+    .userpage-button{
+        width: 75%;
+    }
+}
+
+@media (max-width: 600px) {
     .btn{
         font-size: 16px;
     }
@@ -78,7 +193,30 @@
     .userPageContent{
         margin-left: 15px;
     }
+
+    .userPageContent2{
+        margin-left: 50px;
+    }
+
+    .buttons-column{
+        margin-top: 0px;
+    }
+
+    .userpage-button{
+        width: 80%;
+    }
+
+    .userPageContent1{
+        display: none;
+    }
     
+    .userPageElimination1{
+        display: none;
+    }
+
+    .elimination-title{
+        font-size: 1.2rem;
+    }
 }
 
 @media (max-width: 460px) {
@@ -109,9 +247,22 @@
 
     .btn{
         font-size: 14px;
-    }
-    
+    }   
 }
+
+.back-button {
+    background-color: #212529;
+    color: white;
+    border-radius: 5px;
+    width: 30%;
+}
+
+.back-button:hover {
+    background-color: #0d6efd;
+    color: white;
+}
+
+
 
 
 @media (max-width: 370px) {

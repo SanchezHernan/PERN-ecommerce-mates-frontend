@@ -5,51 +5,47 @@ import MyForm from '../Form/form'
 import './navbar.css'
 import { useState } from 'react'
 import useUser from '../../hook/useUser'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 
 function NavBar() {
 
     const [show, setShow] = useState(false);
     const {logout} = useUser();
+    const location = useLocation()
 
-    const myFunction = () => {
-        setShow(true);
-    }
 
-    const myOtherFunction = () => {
-        setShow(false);
-    }
-
+    const myFunction = () => setShow(true);
+    
+    const myOtherFunction = () => setShow(false)
+    
 
     return (
-        
         <nav className="navbar navbar-dark bg-dark">
             <Link className="navbar-brand navbar-content-1" to="/home">
                 <img src={mateImg} className="d-inline-block align-top imglad mate" alt="" loading="lazy"/>
                 Remate Amargo
             </Link>  
+            {location.pathname === '/home' &&
             <div className='navbar-content-2'>
                 <MyForm/>
             </div>
-            <div>
+            }
             <div className="navbar-content-3" href="#">
                 <Link to='/cart' >
                     <img src={carritoImg} className="carrito" alt="" loading="lazy"/>
                 </Link>
-                <div>
+                
                 <div className='dropdown' onMouseEnter={myFunction} onMouseLeave={myOtherFunction}>
                     <img src={userImg} className="user" alt="" loading="lazy"/>
                     {show && 
                         <div id='myDropdown' className='dropdown-content'>
-                            <Link to='/user' >Ususario</Link>
+                            <Link to='/user' >Usuario</Link>
                             <Link to='/purchases'>Mis Compras</Link>
                             <a className='logout' href='#' onClick={logout}>Log out</a>
                         </div>
                     }
                 </div>
-                </div>
-            </div>
             </div>
         </nav>
     );

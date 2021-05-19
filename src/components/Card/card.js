@@ -5,14 +5,13 @@ import { useHistory } from 'react-router-dom';
 
 function Card({ cardClass = 'card dim', imgClass = 'card-img-top img-dim', img = null, nombre, precio, descuento, codigo }) {
 
-    const {changeProdId, combo} = useOptions();
+    const {changeProdId} = useOptions();
     const history = useHistory();
 
     const handleClick = (e) => {
         e.preventDefault()
         changeProdId(codigo)
-        if (combo) history.push('/combo')
-        else history.push('/product')
+        history.push('/product')
     }
 
     return (

@@ -56,6 +56,7 @@
 
 
 .dropdown{
+    padding-top: 1px;
     position: relative;
     display: inline-block;
 }
@@ -102,10 +103,7 @@
         height: 30px;
     }
 
-    .user{
-        width: 28px;
-        height: 28px;
-    }
+    
 
     .imglad{
         padding-right: 3px;

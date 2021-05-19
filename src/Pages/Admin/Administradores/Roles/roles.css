@@ -1,0 +1,38 @@
+.roles{
+    display: flex;
+    flex-direction: column;
+}
+
+.roles-content{
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 960px;
+}
+
+.userInvalido{
+    color: red;
+}
+
+.userValido{
+    font-size: 20px;
+    color: green;
+}
+
+.continuarMode{
+    margin-top: 25px;
+}
+
+.info-password{
+    color: black;
+}
+
+.roles-button-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.w50{
+    width: 50%;
+}

@@ -10,8 +10,7 @@ const Input = ({ atribute, handleChange }) => {
                 type={atribute.type}
                 className={atribute.className}
                 placeholder={atribute.placeholder}
-                value={atribute.value}
-                onChange={ (e) => handleChange(e) }
+                onChange={e => handleChange(e.target.id, e.target.value) }
             />
         </div>
     );

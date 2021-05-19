@@ -1,0 +1,15 @@
+.contact-item-container{
+    display: flex;
+    margin: 2px;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.item-img{
+    width: 23px;
+}
+
+.item-texto{
+    margin-left: 5px;
+}

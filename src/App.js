@@ -8,6 +8,20 @@ import ProductPage from './Pages/productPage/productPage'
 import CartPage from './Pages/cartPage/cartPage'
 import PurchasesPage from './Pages/purchasesPage/purchasesPage'
 import ComboPage from './Pages/comboPage/comboPage'
+import Users from './Pages/Admin/Users/users'
+import Products from './Pages/Admin/Products/products'
+import Combos from './Pages/Admin/Combos/combos'
+import Menu from './Pages/Admin/Menu/menu'
+import Proveedores from './Pages/Admin/Proveedores/proveedores'
+import Ventas from './Pages/Admin/Ventas/ventas'
+import NotFound from './Pages/notFound/notFound'
+import Administradores from './Pages/Admin/Administradores/administradores'
+import Roles from './Pages/Admin/Administradores/Roles/roles'
+
+//api de marcado pago
+//sweet alert
+//cambiar el history
+//revisar creaciom de combos
 
 import React from "react";
 import {
@@ -35,7 +49,15 @@ function App() {
             <Route exact path='/cart' component={CartPage}/>
             <Route exact path='/purchases' component={PurchasesPage}/>
             <Route exact path='/combo' component={ComboPage}/>
-            <Route path="*"><div>404 Not found </div></Route>
+            <Route exact path='/admin' component={Menu}/>
+            <Route exact path='/admin/users' component={Users}/>
+            <Route exact path='/admin/products' component={Products}/>
+            <Route exact path='/admin/combos' component={Combos}/>
+            <Route exact path='/admin/proveedores' component={Proveedores}/>
+            <Route exact path='/admin/ventas' component={Ventas}/>
+            <Route exact path='/admin/administradores' component={Administradores}/>
+            <Route exact path='/admin/administradores/roles' component={Roles}/>
+            <Route path="*" component={NotFound}/>
           </Switch>
         </Router>
       </div>

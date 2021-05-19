@@ -1,0 +1,19 @@
+.ventas-main-mode{
+    margin: 10px;
+}
+
+
+.title-img{
+    width: 28px;
+    align-self: center;
+}
+
+.centered{
+    justify-content: center;
+    text-align: center;
+}
+
+.back-btn{
+    width: 280px;
+    margin: 10px;
+}

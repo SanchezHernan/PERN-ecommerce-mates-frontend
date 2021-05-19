@@ -14,9 +14,11 @@ import getProduct from '../../services/getProduct';
 import postProductInCart from '../../services/postProductInCart'
 import getUser from '../../services/getUser'
 import postCalification from '../../services/postCalification'
+import { getBought } from '../../services/getServices'
+import getCalificationExists from '../../services/getCalificationExists'
 
 import './productPage.css'
-import getBought from '../../services/getBought';
+import getProdCalificable from '../../services/getProdCalificable';
 
 
 const ProductPage = () => {
@@ -24,18 +26,18 @@ const ProductPage = () => {
     const history = useHistory()
     const {isLogged, email} = useUser()
     const {calcularDescuento} = useDescuento()
-    const { prodId, combo } = useOptions()
+    const { prodId } = useOptions()
     const {date, time} = useDate()
     const [info, setInfo] = useState(null)
-    const [selected, setSelected] = useState('1')  
-
+    const [selected, setSelected] = useState('1')
+    const [calificable, setCalificable] = useState(false)
+    const [calificado, setCalificado] = useState(false) 
 
     const agregarAlCarrito = async () => {
         const cant = selected
         const prodId = info.codigo
         const opc = '0'
-        console.log(opc)
-        const user = await getUser({email})        
+        const user = await getUser(email)        
         const cartId = user.carritoactual
         await postProductInCart({ cant, opc , prodId, cartId } )
         alert('Agregado al carrito')
@@ -47,9 +49,12 @@ const ProductPage = () => {
 
     const handleClick = async (value) => {
         try {
-            const resp = await getBought(email, prodId)
+            const resp = await getBought(email, prodId, 'FINALIZADA')
             if (resp.comprado) {
                 postCalification(value, date, time, email, prodId)
+                setCalificado(true)
+            } else {
+                alert('Debes comprar el producto antes de calificarlo')
             }
         }
         catch (err) { console.error(err.message)
@@ -68,10 +73,16 @@ const ProductPage = () => {
         const fetchData = async () => {
             const resp = await getProduct({prodId})
             const data = calcularDescuento(resp)
+            const cal = await getProdCalificable(prodId, email)
+            if (cal.calificable) {
+                setCalificable(true)
+                const calif = await getCalificationExists(prodId, email)
+                if (calif.existe) setCalificado(true) 
+            }    
             setInfo(data)
         }
         fetchData() 
-    }, [prodId, combo]);
+    }, [prodId]);
 
        
     return(
@@ -80,16 +91,20 @@ const ProductPage = () => {
             {info && 
                 <div className='prodContent'>
                     <div className='prodImgContent'>
-                        <div>
+                        <div className='imagen'>
                             <img className='imgtam' src={info.imagen} alt='#'/>
                         </div>
-                        <div className="rating rating2">
+                        {calificado ?
+                            <h3>Calificado</h3>
+                        : (calificable &&
+                            <div className="rating rating2">
                             <a onClick={() => handleClick(5)} href="#5" title="Give 5 stars">★</a>
                             <a onClick={() => handleClick(4)} href="#4" title="Give 4 stars">★</a>
                             <a onClick={() => handleClick(3)} href="#3" title="Give 3 stars">★</a>
                             <a onClick={() => handleClick(2)} href="#2" title="Give 2 stars">★</a>
                             <a onClick={() => handleClick(1)} href="#1" title="Give 1 star">★</a>
                         </div>
+                        )}
                     </div>
                     <div className='prodInfoContent'>
                         <h1>{info.nombre}</h1>
@@ -114,14 +129,17 @@ const ProductPage = () => {
                                 <option value="9">9 Unidades</option>
                                 <option value="10">10 Unidades</option>
                             </select>
-                        </div>               
-                        <Button
-                            atr={{
-                                text: 'Agregar al carrito',
-                                type: 'button'
-                            }}
-                            handleClick = { agregarAlCarrito }
-                        />
+                        </div>   
+                        <div className='card-button'>            
+                            <Button
+                                atr={{
+                                    text: 'Agregar al carrito',
+                                    type: 'button',
+                                    className: 'btn btn-outline-dark mt5'
+                                }}
+                                handleClick = { agregarAlCarrito }
+                            />
+                        </div>
                     </div>
                 </div>
             }

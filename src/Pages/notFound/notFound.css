@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans');
+
+
+.pagenotfound-container{
+    --blue: #0e0620;
+    --white: #fff;
+    --green: #2ccf6d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    font-family:"Nunito Sans";
+    color: var(--blue);
+    font-size: 1em;
+    height: 41em;
+}
+
+.algo{
+    display: flex;
+    width: 90%;
+    max-width: 1100px;
+}
+
+.col1{
+    display: flex;
+    flex: 1;
+    align-content: center;
+}
+
+.col2{
+    flex: 1;
+}
+
+button {
+  font-family:"Nunito Sans";
+}
+ul {
+  list-style-type: none;
+  padding-inline-start: 35px;
+}
+svg {
+  width: 100%;
+}
+
+.col-1{
+    width: 250px;
+}
+.col-2{
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+}
+
+.notFoundTitle{
+    text-justify: auto;
+    font-size: 7.5em;
+    font-weight: bold;
+}
+.NotFoundSubtitle {
+  font-weight: bold;
+}
+.p-text{
+    color: black;
+}
+.g-btn {
+  z-index: 1;
+  overflow: hidden;
+  background: transparent;
+  position: relative;
+  padding: 8px 50px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1em;
+  letter-spacing: 2px;
+  transition: 0.2s ease;
+  font-weight: bold;
+  margin: 5px 0px;
+}
+.green {
+    border: 4px solid var(--green);
+    color: var(--blue);
+}
+.green:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 0%;
+      height: 100%;
+      background: var(--green);
+      z-index: -1;
+      transition: 0.2s ease;
+}
+.green:hover {
+    color: var(--white);
+    background: var(--green);
+    transition: 0.2s ease;
+}
+.green:hover:before {
+    width: 100%;
+}
+
+
+
+@media (max-width: 1200px) {
+    .notFoundTitle{
+        font-size: 7em;
+    }
+}
+
+@media (max-width: 1100px) {
+    .notFoundTitle{
+        font-size: 6.5em;
+    }
+    .btn {
+        padding: 8px 40px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 1000px) {
+    .algo{
+        width: 95%;
+    }
+    .notFoundTitle{
+        font-size: 6em;
+    }
+    .btn {
+        padding: 7px 37px;
+    }
+    .green {
+        border: 3px solid var(--green);
+    }
+    .NotFoundSubtitle {
+        font-weight: normal;
+    }
+}
+
+@media (max-width: 800px) {
+    .notFoundTitle{
+        font-size: 5.5em;
+    }
+    .NotFoundSubtitle {
+        font-size: 22px;
+    }
+    .p-text{
+        font-size: 13px;
+    }
+    .btn {
+        padding: 6px 35px;
+        margin: 3px 0px;
+    }
+}
+
+@media (max-width: 700px) {
+    .notFoundTitle{
+        font-size: 5em;
+    }
+    .NotFoundSubtitle {
+        font-size: 20px;
+    }
+    .p-text{
+        font-size: 12px;
+    }
+    .btn {
+        padding: 5.5px 33px;
+        font-size: 0.8em;
+    }
+}

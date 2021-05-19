@@ -1,19 +1,25 @@
 .cartContainer{
     margin: 10px 5px 5px 5px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
 }
 
 .cartContent1{
     flex: auto;
+    margin: 10px;
+    padding-right: 5px;
 }
 
 .cartContent2{
+    display: flex;
+    flex-direction: column;
     flex: auto;
+    align-items: center;
 }
 
 .listContent{
+    margin-bottom: 5px;
     justify-content: space-around;
 }
 
@@ -41,15 +47,87 @@
 
 .buttonsContainer{
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
-.button{
-    margin: 5px;
+.cart-button{
+    width: 40%;
+    margin-top: 15px;
 }
 
 .hidden{
+    margin-top: 15px;
     display: flex;
     flex-direction: column;
+    width: 60%;
+}
+
+.hidden-cont-1{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.form-label{
+    flex: 2;
+}
+
+.form-control{
+    flex: 5;
+}
+
+.cart-price{
+    margin-top: 25px;
+}
+
+.hidden-cont-2, .form-select{
+    width: 100%;
+}
+
+
+@media (max-width: 780px) {
+    .hidden{
+        width: 70%;
+    }
+
+    h5{
+        font-size: 18px;
+    }
+
+    .cartContent1{
+        font-size: 14px;
+    }
+
+}
+
+@media (max-width: 650px) {
+    .hidden{
+        width: 80%;
+    }
+
+    h5{
+        font-size: 17px;
+    }
+
+    .cartContent1{
+        font-size: 13px;
+    }
+
+
+}
+
+@media (max-width: 550px) {
+    .hidden{
+        width: 90%;
+    }
+
+    h5{
+        font-size: 17px;
+    }
+
+    .listed-content-2{
+        display: none;
+    }
 }
