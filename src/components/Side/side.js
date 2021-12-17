@@ -15,8 +15,8 @@ const Side = () => {
     const{ marcar } = useOptions()
     const [show, setShow] = useState()
     
-    const handleChange = (event) => {
-        marcar(event.target.value)
+    const handleChange = (value) => {
+        if (value !== "10") marcar(value)
     }
 
     const myFunction = () => {
@@ -36,8 +36,8 @@ const Side = () => {
                 </div>
                 <h3 className="art">Artículos</h3>
                 <div className="input-group">
-                    <select className="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon" onChange={handleChange}>
-                        <option defaultValue>Filtrar por...</option>
+                    <select className="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon" onChange={e => handleChange(e.target.value)}>
+                        <option value="10">Filtrar por...</option>
                         <option value="1">Mates</option>
                         <option value="2">Termos</option>
                         <option value="3">Bombillas</option>

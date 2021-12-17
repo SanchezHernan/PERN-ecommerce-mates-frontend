@@ -1,0 +1,10 @@
+.notifContainer{
+    display: flex;
+    flex-direction: column;
+    margin: 50px;
+    align-items: center;
+}
+
+.notifContent{
+    max-width: 1000px;
+}

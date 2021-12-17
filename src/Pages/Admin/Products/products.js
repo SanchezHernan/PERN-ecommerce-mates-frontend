@@ -1,16 +1,29 @@
 import { useEffect, useState } from "react"
+<<<<<<< HEAD
 import getProductsTipe from "../../../services/getProductsTipe"
+=======
+import { useHistory } from "react-router"
+import { toast } from "react-toastify"
+>>>>>>> f4529ec (entrega)
 import NavBar from '../../../components/NavBar/navbar'
 import Button from '../../../components/Button/button'
 import EditableLine from '../../../components/EditableLine/editableLine'
 import useUser from "../../../hook/useUser"
-import { useHistory } from "react-router"
 import edit2 from '../../../images/edit2.png'
 import cancel2 from '../../../images/cancel2.png'
-
-import './products.css'
+import getProductsTipe from "../../../services/getProductsTipe"
 import putProduct from "../../../services/putProduct"
 import postProduct from "../../../services/postProduct"
+
+import './products.css'
+import 'react-toastify/dist/ReactToastify.css'
+
+
+toast.configure({
+  theme: 'dark',
+  pauseOnHover: true,
+  draggable: true
+})
 
 
 const Products = () => {
@@ -56,21 +69,13 @@ const Products = () => {
     }
 
     const handleNombre = (value) => setNombre(value)
-
     const handlePrecio = (value) => setPrecio(value)
-
     const handleDescripcion = (value) => setDescripcion(value)
-
     const handleDescuento = (value) => setDescuento(value)
-
     const handleStock = (value) => setStock(value)
-
     const handleStockmin = (value) => setStockmin(value)
-
     const handleProveedor = (value) => setProveedor(value)
-
     const handleTipo = (value) => setTipo(value)
-
     const handleImagen = (value) => setImagen(value)
         
     const cerrar = () => {
@@ -84,7 +89,7 @@ const Products = () => {
         if (verificar) 
             putProduct(nombre, stock, precio, stockmin, descripcion, proveedor, tipo, descuento, productoAEditar.codigo)
         else  
-            alert('Faltan Datos')
+            toast.warn('Faltan Datos')
         setModificacion(!modificacion)
     }
 

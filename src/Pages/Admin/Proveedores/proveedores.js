@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useState } from "react"
 import { useHistory } from "react-router"
+import { toast } from "react-toastify"
 import useUser from "../../../hook/useUser"
 import NavBar from '../../../components/NavBar/navbar'
 import Button from '../../../components/Button/button'
@@ -12,6 +13,15 @@ import editImg from '../../../images/edit2.png'
 import cancelImg from '../../../images/cancel2.png'
 
 import './proveedores.css'
+import 'react-toastify/dist/ReactToastify.css'
+
+
+toast.configure({
+  theme: 'dark',
+  pauseOnHover: true,
+  draggable: true
+})
+
 
 
 const Proveedores = () => {
@@ -38,9 +48,8 @@ const Proveedores = () => {
     
 
 
-    const goToAdminMenu = () => {
-        history.push('/admin')
-    }
+    const goToAdminMenu = () => history.push('/admin')
+    
 
     const deleteProv = (proveedor) => {
         let eliminate = false
@@ -88,11 +97,11 @@ const Proveedores = () => {
             && ciudadEdit.length > 0 && direccionEdit.length > 0){
             putProveedor(proveedorAEditar.cuit, nombreEdit, emailEdit, telefonoEdit, ciudadEdit, direccionEdit)
             setActualizado(actualizado+1)
-            alert('Datos Actualizados Correctamente')
+            toast.success('Datos Actualizados Correctamente')
             setEditMode(false)
         }
         else
-            alert('Datos Faltantes')
+            toast.warn('Datos Faltantes')
     }
 
 
@@ -114,11 +123,11 @@ const Proveedores = () => {
             ciudadEdit.length > 0 && direccionEdit.length > 0 && cuitNew.length > 0){
             postProveedor(cuitNew, nombreEdit, emailEdit, telefonoEdit, ciudadEdit, direccionEdit)
             setActualizado(actualizado+1)
-            alert('Datos Actualizados Correctamente')
+            toast.success('Datos Actualizados Correctamente')
             setCreateMode(false)
         }
         else
-            alert('Datos Faltantes')
+            toast.warn('Datos Faltantes')
     }
 
     const exitCreateMode = () => setCreateMode(false)

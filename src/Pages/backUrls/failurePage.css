@@ -1,0 +1,9 @@
+.failureContainer{
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.failureImg{
+    width: 100%;
+}

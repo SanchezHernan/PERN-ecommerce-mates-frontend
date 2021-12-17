@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react"
+import {Link, useHistory} from 'react-router-dom'
+import { toast } from 'react-toastify'
+
 import NavBar from '../../../components/NavBar/navbar'
 import Button from '../../../components/Button/button'
 import Input from '../../../components/Input/Input'
@@ -8,16 +11,21 @@ import getProductsTipe from "../../../services/getProductsTipe"
 import getCombos from '../../../services/getCombos'
 import { putCombo } from '../../../services/putServices'
 import { deleteCombo, deleteProductoxcombo } from '../../../services/deleteCombo'
+import {postCombo, postComboXProducto} from "../../../services/postCombo"
+import getComboProducts from "../../../services/getComboProducts"
 import edit2 from '../../../images/edit2.png'
 import cancel2 from '../../../images/cancel2.png'
 import addButton from '../../../images/addButton.png'
-import {Link, useHistory} from 'react-router-dom'
 
 import './combos.css'
-import {postCombo, postComboXProducto} from "../../../services/postCombo"
-import getComboProducts from "../../../services/getComboProducts"
+import 'react-toastify/dist/ReactToastify.css'
 
-import { toast } from 'react-toastify'
+
+toast.configure({
+  theme: 'dark',
+  pauseOnHover: true,
+  draggable: true
+})
 
 
 const Combos = () => {
@@ -56,7 +64,7 @@ const Combos = () => {
         const newComboList = combos.filter((item) => item.codigo !== codigo)
         setCombos(newComboList)
         deleteCombo(codigo)
-        toast('borradisimo')
+        toast.success('Combo borrado')
     }
 
     const crearCombo = () => setModoCrear(!modoCrear);
@@ -80,7 +88,7 @@ const Combos = () => {
         setComboName('')
         setComboDescription('')
         setConfirmationMode(false)
-        toast('combo creado')
+        toast.success('Combo creado exitosamente')
     }
 
     const deleteProd = (e, comboProd) => {
@@ -125,12 +133,12 @@ const Combos = () => {
     const confirmarEdit = () => {
         if (comboName.length > 0 && comboDescription.length > 0){
             putCombo(comboModificado.codigo, comboName, comboDescription, comboPrice)
-            alert('Combo modificado')
+            toast('Combo modificado')
             setModoModificar(false)
             setRefresh(refresh+1)
         }
         else
-            alert('Debe completar la informacion')
+            toast.info('Debe completar la informacion')
     }
 
     

@@ -2,20 +2,19 @@ import { useEffect, useState } from "react"
 import { useHistory } from "react-router"
 
 import cancelImg from '../../../images/cancel2.png'
-import editImg from '../../../images/edit2.png'
 import admventas from '../../../images/admventas.svg'
 
 import NavBar from '../../../components/NavBar/navbar'
 import Button from '../../../components/Button/button'
 
 import useUser from "../../../hook/useUser"
+import useOptions from "../../../hook/useOptions"
 
 import { getVenta, getVentas } from "../../../services/getServices"
 import { deleteVenta } from '../../../services/deleteServices'
 import putPurchaseState from '../../../services/putPurchaseState'
 
 import './ventas.css'
-import useOptions from "../../../hook/useOptions"
 
 const Ventas = () => {
 

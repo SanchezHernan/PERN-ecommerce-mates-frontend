@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
+import { toast } from "react-toastify";
+
 import Button from "../../../../components/Button/button"
 import NavBar from "../../../../components/NavBar/navbar"
 import LoginInput from "../../../../components/Input/loginInput"
@@ -7,7 +10,14 @@ import getUser from "../../../../services/getUser";
 import { putRol } from "../../../../services/putServices";
 
 import './roles.css'
-import { useHistory } from "react-router";
+import 'react-toastify/dist/ReactToastify.css'
+
+toast.configure({
+  theme: 'dark',
+  pauseOnHover: true,
+  draggable: true
+})
+
 
 const Roles = () => {
 
@@ -17,7 +27,7 @@ const Roles = () => {
     const [userValido, setUserValido] = useState(false)
     const [selectedRol, setSelectedRol] = useState(0)
     const [passwordError, setPasswordError] = useState(false)
-    const {adminEmail} = useUser()
+    const {isLogged, adminEmail} = useUser()
     const [rolActualUsuario, setRolActualUsuario] = useState(0)
     const history = useHistory()
 
@@ -46,13 +56,13 @@ const Roles = () => {
             if (selectedRol !== 0){
                 if (parseInt(selectedRol) !== rolActualUsuario){
                     putRol(newAdminEmail, selectedRol)
-                    alert(`Rol de ${newAdminEmail} Actualizado con exito`)
+                    toast.success(`Rol de ${newAdminEmail} Actualizado con exito`)
                     history.push('./')
-                } else alert('El usuario ya poseia este rol')
-            } else alert('Debe Seleccionar un Rol para el Usuario')
+                } else toast.info('El usuario ya poseia este rol')
+            } else toast.info('Debe Seleccionar un Rol para el Usuario')
         }
         else {
-            alert('Contraseña Incorrecta')
+            toast.error('Contraseña Incorrecta')
             setPasswordError(true)  
         }
     }
@@ -60,6 +70,14 @@ const Roles = () => {
     const changeRol = (value) => setSelectedRol(value)
 
     const goBack = () => history.push('./')
+
+
+    useEffect(() => {
+        if (!isLogged)
+            history.push('/')
+        if (!adminEmail)
+            history.push('/home')
+      }, [isLogged, history, adminEmail])
 
     return(
         <div className='roles'>

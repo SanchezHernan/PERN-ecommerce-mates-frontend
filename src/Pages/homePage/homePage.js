@@ -123,7 +123,7 @@ const HomePage = () => {
           </div>
           <div className="main">
             <Menu/> 
-              {combo ?
+            {combo ?
               <div className='ofertas'>
                 {prodInfo.map((elemento) =>
                   <ComboCard className='oferta'
@@ -147,7 +147,7 @@ const HomePage = () => {
                   />
                 )}
               </div>
-              }
+            }
           </div>  
         </div>
       </div>

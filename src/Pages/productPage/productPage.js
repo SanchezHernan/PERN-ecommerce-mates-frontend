@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify'
 
 import NavBar from '../../components/NavBar/navbar';
 import Price from '../../components/Price/price'
@@ -16,9 +17,10 @@ import getUser from '../../services/getUser'
 import postCalification from '../../services/postCalification'
 import { getBought } from '../../services/getServices'
 import getCalificationExists from '../../services/getCalificationExists'
+import getProdCalificable from '../../services/getProdCalificable';
 
 import './productPage.css'
-import getProdCalificable from '../../services/getProdCalificable';
+import 'react-toastify/dist/ReactToastify.css'
 
 
 const ProductPage = () => {
@@ -39,13 +41,15 @@ const ProductPage = () => {
         const opc = '0'
         const user = await getUser(email)        
         const cartId = user.carritoactual
-        await postProductInCart({ cant, opc , prodId, cartId } )
-        alert('Agregado al carrito')
+        postProductInCart({ cant, opc , prodId, cartId } )
+        toast.success('Agregado al carrito', {
+            theme: 'dark',
+            pauseOnHover: true,
+            draggable: true,
+        })
     }
 
-    const handleChange = (e) => {
-        setSelected(e.target.value);
-    } 
+    const handleChange = (e) => setSelected(e.target.value)
 
     const handleClick = async (value) => {
         try {
@@ -53,9 +57,12 @@ const ProductPage = () => {
             if (resp.comprado) {
                 postCalification(value, date, time, email, prodId)
                 setCalificado(true)
-            } else {
-                alert('Debes comprar el producto antes de calificarlo')
-            }
+            } else
+                toast('Debes comprar el producto antes de calificarlo', {
+                    theme: 'dark',
+                    pauseOnHover: true,
+                    draggable: true,
+                })
         }
         catch (err) { console.error(err.message)
         }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import NavBar from '../../components/NavBar/navbar'
 import Price from '../../components/Price/price'
@@ -17,7 +18,13 @@ import getComboProducts from '../../services/getComboProducts'
 import getComboStock from '../../services/getComboStock'
 
 import './comboPage.css'
+import 'react-toastify/dist/ReactToastify.css'
 
+toast.configure({
+  theme: 'dark',
+  pauseOnHover: true,
+  draggable: true
+})
 
 const ComboPage = () => {
 
@@ -39,7 +46,7 @@ const ComboPage = () => {
         const user = await getUser(email)        
         const cartId = user.carritoactual
         await postProductInCart({ cant, opc , prodId, cartId } )
-        alert('Agregado al carrito')
+        toast.success('Agregado al carrito')
     }
 
     const handleChange = (e) => {

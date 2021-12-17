@@ -13,6 +13,15 @@ import updateUser from '../../services/updateUser'
 import { putSuspendido } from '../../services/putServices'
 import putPassword from '../../services/putPassword'
 import './userPage.css'
+import 'react-toastify/dist/ReactToastify.css'
+import { toast } from 'react-toastify'
+
+
+toast.configure({
+    theme: 'dark',
+    pauseOnHover: true,
+    draggable: true
+})
 
 
 const UserPage = () => {
@@ -28,6 +37,8 @@ const UserPage = () => {
     const [telefono, setTelefono] = useState('')
     const [eliminar, setEliminar] = useState(false)
     const [changePassword, setChangePassword] = useState(false)
+    const [updated, setUpdated] = useState(1)
+
 
     //Cambio de contrasena
     const [actualPassword, setActualPassword] = useState('')
@@ -50,11 +61,17 @@ const UserPage = () => {
     const guardarCambios = async() => {
         if (nombre !== '' && apellido !== ''){
             updateUser(nombre, apellido, ciudad, direccion, telefono, email)
-            const response = await getUser(email)
-            setUsuario(response)
-            alert('Datos actualizados correctamente')
+            const newUser = usuario
+            newUser.nombre = nombre
+            newUser.apellido = apellido
+            newUser.ciudad = ciudad
+            newUser.direccion = direccion
+            newUser.telefono = telefono
+            setUsuario(newUser)
+            toast.success('Datos actualizados correctamente')
             setShowEdit(false)
-        } else alert('Datos necesarios faltantes')
+            setUpdated(!updated)
+        } else toast.warn('Datos necesarios faltantes')
     }
         
 
@@ -81,7 +98,7 @@ const UserPage = () => {
                 if (r) putSuspendido(email, 'true')
                 history.push('/admin/users')
             }
-            else alert('Contrasenia incorrecta')
+            else toast.error('Contrasenia incorrecta')
         }
         else{
             if (actualPassword === usuario.contrasenia){
@@ -89,7 +106,7 @@ const UserPage = () => {
                 if (r) putSuspendido(email, 'true')
                 logout()
             }
-            else alert('Contrasenia incorrecta')
+            else toast.error('Contrasenia incorrecta')
         }
     }
 
@@ -100,13 +117,12 @@ const UserPage = () => {
                     if (newPassword === newPasswordConfirmation){
                         putPassword(newPassword, email)
                         setAct(!act)
-                        alert('Tu contrasena ha sido actualizada correctamente')
+                        toast.success('Tu contrasena ha sido actualizada correctamente')
                         setChangePassword(false)
-                    }
-                    alert('la confirmacion no coincide con la nueva contrasenia');
+                    } else toast.warn('la confirmacion no coincide con la nueva contrasenia');
                 }
-                else alert('la contrasena nueva coincide con la actual');
-            }
+                else toast.warn('la contrasena nueva coincide con la actual');
+            } else toast.error('Contraseña incorrecta')
         }
         else setChangePassword(true)
     }
@@ -307,7 +323,7 @@ const UserPage = () => {
                                     />
                                     <Button 
                                         atr={{
-                                            text: 'Cambiar Contraseña',
+                                            text: 'Confirmar cambio',
                                             type: 'button',
                                             className: 'btn btn-outline-dark'
                                         }}

@@ -25,22 +25,38 @@ export default function useOptions () {
     }
 
     const changeProdId = (id) => {
+<<<<<<< HEAD
         window.sessionStorage.setItem('prodId', id)
+=======
+        window.localStorage.setItem('prodId', id)
+>>>>>>> f4529ec (entrega)
         setProdId(id);
     }
 
     const cleanProd = () => {
+<<<<<<< HEAD
         window.sessionStorage.removeItem('prodId');
+=======
+        window.localStorage.removeItem('prodId');
+>>>>>>> f4529ec (entrega)
         setProdId(0);
     }
 
     const changeComboId = (id) => {
+<<<<<<< HEAD
         window.sessionStorage.setItem('comboId', id)
+=======
+        window.localStorage.setItem('comboId', id)
+>>>>>>> f4529ec (entrega)
         setComboId(id);
     }
 
     const searchText = (text) => {
+<<<<<<< HEAD
         window.sessionStorage.setItem('search', text)
+=======
+        window.localStorage.setItem('search', text)
+>>>>>>> f4529ec (entrega)
         setSearch(text);
     }
 

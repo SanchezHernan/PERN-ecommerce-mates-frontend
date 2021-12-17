@@ -1,28 +1,41 @@
+// Indicar que la contrasena debe ser mas larga de 6 digitos
+
 import React, { useState, useEffect } from "react"
+import { useHistory } from 'react-router-dom'
+import { toast } from 'react-toastify'
+
 import LoginInput from '../../components/Input/loginInput'
 import Button from '../../components/Button/button'
-import { useHistory } from 'react-router-dom'
+
 import useUser from '../../hook/useUser'
-import './login.css'
+
 import getUser from "../../services/getUser"
 import postCart from "../../services/postCart"
-import {putUserCart} from "../../services/putServices";
+import {putUserCart} from "../../services/putServices"
 import postUser from "../../services/postUser"
 import getUserExists from '../../services/getUserExists'
 
+import './login.css'
+import 'react-toastify/dist/ReactToastify.css'  
+
+
+toast.configure({
+  theme: 'dark',
+  pauseOnHover: true,
+  draggable: true
+})
 
 const LoginPage = () => {
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordError, setPasswordError] = useState(false);
-  const [wrongPassword, setWrongPassword] = useState(false);
-  const [wrongEmail, setWrongEmail] = useState(false);
+  const [loginEmail, setLoginEmail] = useState('')
+  const [loginPassword, setLoginPassword] = useState('')
   const history = useHistory();
   const {login, isLogged, setUserEmail, setAdminInfo} = useUser()
   const [rightPanelActive, setRightPanelActive] = useState(true)
 
   //sign up
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
   const [city, setCity] = useState('')
   const [name, setName] = useState('')
@@ -41,7 +54,14 @@ const LoginPage = () => {
   }, [isLogged, history])
 
   const handleChange = (id, value) => {
+
     switch (id) {
+      case 'loginemail':
+        setLoginEmail(value)
+        break
+      case 'loginpassword':
+        setLoginPassword(value)
+        break
       case 'email':
         setEmail(value)
         break
@@ -73,10 +93,11 @@ const LoginPage = () => {
   };
 
   const getUsuarios = async (param) => {
-    if(param.email.length > 0 && param.password.length > 0) {
+    if(param.loginEmail.length > 0 && param.loginPassword.length > 0) {
       try { 
-        const jsonData = await getUser(param.email)
-        if (jsonData.suspendido) alert('tu cuenta ha sido suspendida, para recuperarla contacta con el servicio')
+        const jsonData = await getUser(param.loginEmail)
+        if (jsonData.suspendido)
+          toast.warn('tu cuenta ha sido suspendida, para recuperarla contacta con el servicio')
         else{
           if (jsonData.rol !== 4)
             setAdminInfo(jsonData.email, jsonData.rol)
@@ -84,34 +105,30 @@ const LoginPage = () => {
           if(!jsonData.carritoactual){
             try {
               const cartId = await postCart()
-              putUserCart(param.email, cartId[0].codigo)
+              putUserCart(param.loginEmail, cartId[0].codigo)
             } catch (err) {
               console.error(err.message)
             }    
           }
           if(jsonData.email.length > 0){
-            setWrongEmail(false);
-            if(jsonData.contrasenia === param.password){
-              setWrongPassword(false);
+
+            if(jsonData.contrasenia === param.loginPassword){
               setUserEmail(jsonData.email);
-              login(jsonData);
-            } else setWrongPassword(true);
+              login(jsonData)
+            } else toast.error('Contraseña incorrecta')
           }
         }
       } catch (err) {
-        setWrongEmail(true);
-        setWrongPassword(false);
-        console.error(err.message);
+        toast.error('Este email no tiene una cuenta registrada')
       }
-    } else setWrongPassword(false);
+    }
   }
   
   const handleIngreso = (e) => {
     e.preventDefault()
-    let account = { email, password }
-    if(account) {
+    let account = { loginEmail, loginPassword }
+    if(account)
       getUsuarios(account);
-    }
   }
 
   const activeRightPanel = () => setRightPanelActive(false) 
@@ -121,15 +138,26 @@ const LoginPage = () => {
   const crearUsuario = async (e) => {
     e.preventDefault()
     const {exists} = await getUserExists(email)
-    if (exists) alert('Este usuario ya tiene una cuenta creada')
+    if (exists)
+      toast.warn("Este usuario ya tiene una cuenta creada")
+    else if (password.length < 6)
+      toast.error('Su contraseña es demasiado corta')
     else {
       if (validarDatos()){
         postUser(email, username, password, name, lastname, address, city, tel)
-        alert('Usuario creado exitosamente')
+        setEmail('')
+        setPassword('')
+        setName('')
+        setUsername('')
+        setLastname('')
+        setAddress('')
+        setCity('')
+        setTel('')
+        toast.success('Usuario creado exitosamente')
         setRightPanelActive(true)
       }
-      else alert('Datos invalidos');
-    }
+      else toast.error('Datos invalidos')
+    } 
   }
 
   const validarDatos = () => {
@@ -138,10 +166,6 @@ const LoginPage = () => {
       setEmailError(false)
       cont = cont + 1
     } else setEmailError(true)
-    if (password.length > 6) {
-      setPasswordError(false)
-      cont = cont + 1
-    } else setPasswordError(true)
     if (name.length > 3) {
       setNameError(false)
       cont = cont + 1
@@ -150,6 +174,8 @@ const LoginPage = () => {
       setLastnameError(false)
       cont = cont + 1
     } else setLastnameError(true)
+    if (city.length > 3 && address.length > 3 && tel.length > 3)
+      cont += 1
     return cont === 4
   }
 
@@ -169,39 +195,38 @@ const LoginPage = () => {
           <p className='white-text fs18'>Ingresa Tus Datos</p>
           <div className='form-element'> 
             <LoginInput
-              atribute={{id: 'email', type: 'email', placeholder: 'ingrese su email'}}
+              atribute={{id: 'email', type: 'email', placeholder: 'Ingrese su email', value: email}}
               handleChange={ handleChange } 
               param={emailError}
             />
             <LoginInput
-              atribute={{id: 'password', type: 'password', placeholder: 'contrasenia'}}
+              atribute={{id: 'password', type: 'password', placeholder: 'Contraseña', value: password}}
               handleChange={ handleChange }
-              param={ passwordError } 
             />
             <LoginInput
-              atribute={{id: 'username', type: 'text', placeholder: 'nombre de usuario'}}
+              atribute={{id: 'username', type: 'text', placeholder: 'Nombre de usuario', value: username}}
               handleChange={ handleChange } 
             />
             <LoginInput className='dato-input'
-              atribute={{id: 'name', type: 'name', placeholder: 'Nombre'}}
+              atribute={{id: 'name', type: 'name', placeholder: 'Nombre', value: name}}
               handleChange={ handleChange } 
               param={ nameError }
             />
             <LoginInput
-              atribute={{id: 'lastname', type: 'text', placeholder: 'Apellido'}}
+              atribute={{id: 'lastname', type: 'text', placeholder: 'Apellido', value: lastname}}
               handleChange={ handleChange } 
               param={ lastnameError }
             />
             <LoginInput
-              atribute={{id: 'city', type: 'text', placeholder: 'Ciudad'}}
+              atribute={{id: 'city', type: 'text', placeholder: 'Ciudad', value: city}}
               handleChange={ handleChange } 
             />
             <LoginInput
-              atribute={{id: 'direction', type: 'text', placeholder: 'Direccion'}}
+              atribute={{id: 'direction', type: 'text', placeholder: 'Direccion', value: address}}
               handleChange={ handleChange } 
             />    
             <LoginInput
-              atribute={{id: 'tel', type: 'number', placeholder: 'Telefono'}}
+              atribute={{id: 'tel', type: 'number', placeholder: 'Telefono', value: tel}}
               handleChange={ handleChange } 
             />
           </div>
@@ -216,32 +241,18 @@ const LoginPage = () => {
       <div className='login-form-container signin-container'>
         <h1 className='white-text'>Ingresa a tu Cuenta</h1>
         <form className='login-form' >
-          { wrongEmail &&
-            <label className='label-alert'>
-              Email incorrecto
-            </label>
-          }
-          { wrongPassword &&
-            <label className='label-alert'>
-              Contraseña incorrecta
-            </label>
-          }
           <div className='form-element'>
           <LoginInput
-            atribute={{id: 'email', type: 'text', placeholder: 'ingrese su email'}}
+            atribute={{id: 'loginemail', type: 'text', placeholder: 'ingrese su email'}}
             handleChange={ handleChange } 
           />
           </div>
           <div className='form-element'>
             <LoginInput
-              atribute={{id: 'password', type: 'password', placeholder: 'ingrese su contraseña'}}
+              atribute={{id: 'loginpassword', type: 'password', placeholder: 'ingrese su contraseña'}}
               handleChange={ handleChange } 
-              param={ passwordError }
             />
           </div>
-          { passwordError &&
-            <small className='small-content'>Contraseña demasiado corta</small>
-          }
           <div className='submit-button-container'>
             <Button
               atr={{ text: 'Ingresar', type: 'Submit' }}
@@ -280,4 +291,4 @@ const LoginPage = () => {
 };
 
 
-export default LoginPage;
+export default LoginPage

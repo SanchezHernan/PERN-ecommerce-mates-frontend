@@ -8,6 +8,7 @@ const LoginInput = ({ atribute, handleChange, param }) => {
             <input 
                 id={atribute.id}
                 type={atribute.type}
+                value={atribute.value}
                 className={ param ? 'form-control is-invalid' : 'form-control' }
                 placeholder={atribute.placeholder}
                 onChange={ (e) => handleChange(e.target.id, e.target.value) }

@@ -1,69 +1,67 @@
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import NavBar from '../../components/NavBar/navbar'
 import Button from '../../components/Button/button'
 import useUser from '../../hook/useUser'
-import useDate from '../../hook/useDate'
+import useCompra from '../../hook/useCompra'
 import useDescuento from '../../hook/useDescuento'
 import cancel2 from '../../images/cancel2.png'
 import getCartProducts from '../../services/getCartProducts'
 import getUser from '../../services/getUser'
 import { deleteCartProduct } from '../../services/deleteServices'
 import emptyCart from '../../services/emptyCart'
-import postCompra from '../../services/postCompra'
-import postCart from '../../services/postCart'
-import { putUserCart } from '../../services/putServices'
 
 import './cartPage.css'
+import 'react-toastify/dist/ReactToastify.css'
+
+toast.configure({
+  theme: 'dark',
+  pauseOnHover: true,
+  draggable: true
+})
+
 
 
 const CartPage = () => {
 
     const history = useHistory()
     const {isLogged, email } = useUser()
-    const {date, time} = useDate()
+    const { setCompra } = useCompra()
     const [productList, setProductList] = useState([])
     const [carrito, setCarrito] = useState(null)
     const { calcularDescuento } = useDescuento()
     const [total, setTotal] = useState(0)
-    const [show, setShow] = useState(false)
-    const [numtarj, setNumtarj] = useState(null)
-    const [tipotarj, setTipotarj] = useState('NO')
   
-    const handleContinuar = () => setShow(!show)
+    const handleContinuar = async() => {
+        let preference = []
+        productList.forEach(prod => {
+            preference.push({
+                'name': prod.nombre,
+                'unit_price': prod.porcdescuento === 0 ? prod.precio : prod.porcdescuento,
+                'quantity': prod.cantidadproducto,
+            })
+        })
+        const resp = await fetch(`http://localhost:5000/api/orders/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({'mydata': preference})
+        })
+        setCompra(JSON.stringify(productList))
+        let data = await resp.json()
+        window.location.assign(data.preference.body.init_point)
+    }
 
     const handleVaciar = () => {
         emptyCart(carrito)
         setProductList([])
     }
 
-    const handleTipotarj = (e) => {
-        if (e.target.value !== 'no')
-            setTipotarj(e.target.value)
-        else setTipotarj(null)
-    }
-
-    const handleNumtarj = (e) => setNumtarj(e.target.value)
-
     const quitarDelCarrito = async (lcod) => {
         await deleteCartProduct(lcod)
         setProductList(productList.filter(prod => prod.codigo !== lcod))
         setTotal(0)
-    }
-
-    const handleComprar = async () => {
-        if (numtarj && tipotarj !== 'NO'){
-            postCompra(total, date, time, numtarj, tipotarj, carrito, email)
-            const cartId = await postCart()
-            const resp = await putUserCart(email, cartId[0].codigo)
-            setCarrito(cartId[0].codigo)
-            setTotal(0)
-            setProductList([])
-            alert('Compra realizada con exito')
-            setShow(false)
-        }
-        else alert('Datos Faltantes') 
     }
 
 
@@ -84,12 +82,12 @@ const CartPage = () => {
             setCarrito(cartId)
         }
         fetchData()
-    }, [])
+    }, [calcularDescuento, email])
 
     useEffect(() => {
         let sum = 0
         if (productList){
-        productList.map((product) => {
+        productList.forEach((product) => {
                 if (product.porcdescuento === 0){
                     sum = sum + (product.precio * product.cantidadproducto)
                 } else {
@@ -124,67 +122,29 @@ const CartPage = () => {
                 </ul>
                 <div className='cartContent2'>
                     <h3 className='cart-price'>Precio Total: ${total}</h3>
-                    {!show ? 
-                        <div className='buttonsContainer'>
-                            <h4>Metodo de Pago: </h4>
-                            <div className='cart-button'>
-                                <Button
-                                    atr={{
-                                        text: 'Continuar',
-                                        type: 'button',
-                                        className: 'btn btn-outline-dark'
-                                    }}
-                                    handleClick = {handleContinuar}
-                                />
-                            </div>
-                            <div className='cart-button'>
-                                <Button
-                                    atr={{
-                                        text: 'Vaciar Carrito',
-                                        type: 'button',
-                                        className: 'btn btn-outline-dark',
-                                        disabled: productList.length === 0
-                                    }}
-                                    handleClick = {handleVaciar}
-                                />
-                            </div>
-                        </div>
-                    :
-                        <form className='hidden'>
-                            <div className='hidden-cont-1 mb-2'>
-                                <div className="input-group mb-2">
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text" id="">Numero de Tarjeta</span>
-                                    </div>
-                                    <input type='number' className='form-control' onChange={handleNumtarj}/>
-                                </div>
-                            </div>
-                            <div className='input-group hidden-cont-2 mb-1'>
-                                <select className="custom-select mb-1" onChange={handleTipotarj}>
-                                    <option value='NO' defaultValue>Tipo Tarjeta...</option>
-                                    <option value="VISA">VISA</option>
-                                    <option value="MASTERCARD">MASTERCARD</option>
-                                    <option value="NARANJA">NARANJA</option>
-                                </select>
-                            </div>
+                    <div className='buttonsContainer'>
+                        <div className='cart-button'>
                             <Button
                                 atr={{
-                                    text: 'Finalizar Compra',
+                                    text: 'Comprar',
                                     type: 'button',
-                                    className: 'btn btn-outline-dark mb-2'
-                                }}
-                                handleClick = {handleComprar}
-                            />
-                            <Button
-                                atr={{
-                                    text: 'Cancelar',
-                                    type: 'button',
-                                    className: 'btn btn-outline-dark'
+                                    className: 'btn btn-outline-success'
                                 }}
                                 handleClick = {handleContinuar}
                             />
-                        </form>
-                    }
+                        </div>
+                        <div className='cart-button'>
+                            <Button
+                                atr={{
+                                    text: 'Vaciar Carrito',
+                                    type: 'button',
+                                    className: 'btn btn-outline-dark',
+                                    disabled: productList.length === 0
+                                }}
+                                handleClick = {handleVaciar}
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

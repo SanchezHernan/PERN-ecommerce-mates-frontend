@@ -5,5 +5,5 @@ export default async function postProductInCart({cant, opc, prodId, cartId}){
         method: 'POST'
     })
     const jsonData = await response.json();
-    return jsonData;
+    return true;
 }
